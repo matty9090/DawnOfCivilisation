@@ -20,19 +20,30 @@ class DAWNOFCIVILISATION_API AGeosphere : public AActor
 		virtual void OnConstruction(const FTransform& Transform) override;
 
 	public:	
-		// Called every frame
 		virtual void Tick(float DeltaTime) override;
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
 		UProceduralMeshComponent* Mesh;
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sphere")
-		int Divisions;
-		
-		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sphere")
-		float Diameter;
+		int EditorDivisions;
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sphere")
+		int PlayDivisions;
+		
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sphere")
+		float Radius;
+
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Noise")
+		float NoiseScale;
+
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Noise")
+		float NoiseHeight;
+
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Noise")
+		float Persistence;
+
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Material")
 		UMaterialInterface* Material;
 
 	private:
@@ -46,6 +57,7 @@ class DAWNOFCIVILISATION_API AGeosphere : public AActor
 
 		void Generate(float diameter, size_t tessellation);
 		void ClearMeshData();
+		float GetHeight(const FVector& pos);
 
 		UPROPERTY()
 		TArray<FVector> Vertices;

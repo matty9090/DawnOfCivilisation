@@ -2,6 +2,7 @@
 
 
 #include "Geosphere.h"
+#include "SimplexNoiseBPLibrary.h"
 
 #include <map>
 #include <vector>
@@ -21,19 +22,19 @@ AGeosphere::AGeosphere()
 	Generate(100.0f, 2);
 }
 
-void AGeosphere::Generate(float diameter, size_t tessellation)
+void AGeosphere::Generate(float radius, size_t tessellation)
 {
 	std::vector<VertexPositionNormalTexture> vertices;
-	std::vector<uint16_t> indices;
+	std::vector<int32> indices;
 
-	typedef std::pair<uint16_t, uint16_t> UndirectedEdge;
+	typedef std::pair<int32, int32> UndirectedEdge;
 
-	auto makeUndirectedEdge = [](uint16_t a, uint16_t b)
+	auto makeUndirectedEdge = [](int32 a, int32 b)
 	{
 		return std::make_pair(std::max(a, b), std::min(a, b));
 	};
 
-	typedef std::map<UndirectedEdge, uint16_t> EdgeSubdivisionMap;
+	typedef std::map<UndirectedEdge, int32> EdgeSubdivisionMap;
 
 	static const FVector Octahedronvertices[] =
 	{
@@ -46,7 +47,7 @@ void AGeosphere::Generate(float diameter, size_t tessellation)
 		FVector(0, -1,  0), // 5 bottom
 	};
 
-	static const uint16_t Octahedronindices[] =
+	static const int32 Octahedronindices[] =
 	{
 		0, 1, 2, // top front-right face
 		0, 2, 3, // top back-right face
@@ -58,16 +59,14 @@ void AGeosphere::Generate(float diameter, size_t tessellation)
 		5, 2, 1, // bottom front-right face
 	};
 
-	const float radius = diameter / 2.0f;
-
 	// Start with an octahedron; copy the data into the vertex/index collection.
 
 	std::vector<FVector> vertexPositions(std::begin(Octahedronvertices), std::end(Octahedronvertices));
 
 	indices.insert(indices.begin(), std::begin(Octahedronindices), std::end(Octahedronindices));
 
-	const uint16_t northPoleIndex = 0;
-	const uint16_t southPoleIndex = 5;
+	const int32 northPoleIndex = 0;
+	const int32 southPoleIndex = 5;
 
 	for (size_t iSubdivision = 0; iSubdivision < tessellation; ++iSubdivision)
 	{
@@ -75,7 +74,7 @@ void AGeosphere::Generate(float diameter, size_t tessellation)
 
 		EdgeSubdivisionMap subdividedEdges;
 
-		std::vector<uint16_t> newindices;
+		std::vector<int32> newindices;
 
 		const size_t triangleCount = indices.size() / 3;
 		for (size_t iTriangle = 0; iTriangle < triangleCount; ++iTriangle)
@@ -84,20 +83,20 @@ void AGeosphere::Generate(float diameter, size_t tessellation)
 			// The winding order of the triangles we output are the same as the winding order of the inputs.
 
 			// indices of the vertices making up this triangle
-			uint16_t iv0 = indices[iTriangle * 3 + 0];
-			uint16_t iv1 = indices[iTriangle * 3 + 1];
-			uint16_t iv2 = indices[iTriangle * 3 + 2];
+			int32 iv0 = indices[iTriangle * 3 + 0];
+			int32 iv1 = indices[iTriangle * 3 + 1];
+			int32 iv2 = indices[iTriangle * 3 + 2];
 
 			// Get the new vertices
 			FVector v01; // vertex on the midpoint of v0 and v1
 			FVector v12; // ditto v1 and v2
 			FVector v20; // ditto v2 and v0
-			uint16_t iv01; // index of v01
-			uint16_t iv12; // index of v12
-			uint16_t iv20; // index of v20
+			int32 iv01; // index of v01
+			int32 iv12; // index of v12
+			int32 iv20; // index of v20
 
 			// Function that, when given the index of two vertices, creates a new vertex at the midpoint of those vertices.
-			auto divideEdge = [&](uint16_t i0, uint16_t i1, FVector & outVertex, uint16_t & outIndex)
+			auto divideEdge = [&](int32 i0, int32 i1, FVector & outVertex, int32 & outIndex)
 			{
 				const UndirectedEdge edge = makeUndirectedEdge(i0, i1);
 
@@ -109,17 +108,9 @@ void AGeosphere::Generate(float diameter, size_t tessellation)
 				}
 				else
 				{
-					/*XMStoreFloat3(
-						&outVertex,
-						XMVectorScale(
-							XMVectorAdd(XMLoadFloat3(&vertexPositions[i0]), XMLoadFloat3(&vertexPositions[i1])),
-							0.5f
-						)
-					);*/
-
 					outVertex = (vertexPositions[i0] + vertexPositions[i1]) * 0.5f;
 					
-					outIndex = static_cast<uint16_t>(vertexPositions.size());
+					outIndex = static_cast<int32>(vertexPositions.size());
 					vertexPositions.push_back(outVertex);
 
 					auto entry = std::make_pair(edge, outIndex);
@@ -131,7 +122,7 @@ void AGeosphere::Generate(float diameter, size_t tessellation)
 			divideEdge(iv1, iv2, v12, iv12);
 			divideEdge(iv0, iv2, v20, iv20);
 
-			const uint16_t indicesToAdd[] =
+			const int32 indicesToAdd[] =
 			{
 				 iv0, iv01, iv20, // a
 				iv20, iv12,  iv2, // b
@@ -148,9 +139,6 @@ void AGeosphere::Generate(float diameter, size_t tessellation)
 	for (auto it = vertexPositions.begin(); it != vertexPositions.end(); ++it)
 	{
 		auto vertexValue = *it;
-
-		/*auto normal = XMVector3Normalize(XMLoadFloat3(&vertexValue));
-		auto pos = XMVectorScale(normal, radius);*/
 
 		auto normal = vertexValue;
 		normal.Normalize();
@@ -172,11 +160,6 @@ void AGeosphere::Generate(float diameter, size_t tessellation)
 	size_t preFixupVertexCount = vertices.size();
 	for (size_t i = 0; i < preFixupVertexCount; ++i)
 	{
-		/*bool isOnPrimeMeridian = XMVector2NearEqual(
-			XMVectorSet(vertices[i].position.x, vertices[i].textureCoordinate.x, 0.0f, 0.0f),
-			XMVectorZero(),
-			XMVectorSplatEpsilon());*/
-
 		bool isOnPrimeMeridian = FVector2D::ZeroVector.Equals(FVector2D(vertices[i].position.X, vertices[i].uv.X), 1.192092896e-7);
 
 		if (isOnPrimeMeridian)
@@ -189,9 +172,9 @@ void AGeosphere::Generate(float diameter, size_t tessellation)
 
 			for (size_t j = 0; j < indices.size(); j += 3)
 			{
-				uint16_t* triIndex0 = &indices[j + 0];
-				uint16_t* triIndex1 = &indices[j + 1];
-				uint16_t* triIndex2 = &indices[j + 2];
+				int32* triIndex0 = &indices[j + 0];
+				int32* triIndex1 = &indices[j + 1];
+				int32* triIndex2 = &indices[j + 2];
 
 				if (*triIndex0 == i)
 				{
@@ -220,7 +203,7 @@ void AGeosphere::Generate(float diameter, size_t tessellation)
 				if (abs(v0.uv.X - v1.uv.X) > 0.5f ||
 					abs(v0.uv.X - v2.uv.X) > 0.5f)
 				{
-					*triIndex0 = static_cast<uint16_t>(newIndex);
+					*triIndex0 = static_cast<int32>(newIndex);
 				}
 			}
 		}
@@ -233,9 +216,9 @@ void AGeosphere::Generate(float diameter, size_t tessellation)
 
 		for (size_t i = 0; i < indices.size(); i += 3)
 		{
-			uint16_t* pPoleIndex;
-			uint16_t* pOtherIndex0;
-			uint16_t* pOtherIndex1;
+			int32* pPoleIndex;
+			int32* pOtherIndex0;
+			int32* pOtherIndex1;
 			if (indices[i + 0] == poleIndex)
 			{
 				pPoleIndex = &indices[i + 0];
@@ -273,7 +256,7 @@ void AGeosphere::Generate(float diameter, size_t tessellation)
 			}
 			else
 			{
-				*pPoleIndex = static_cast<uint16_t>(vertices.size());
+				*pPoleIndex = static_cast<int32>(vertices.size());
 				vertices.push_back(newPoleVertex);
 			}
 		}
@@ -286,6 +269,8 @@ void AGeosphere::Generate(float diameter, size_t tessellation)
 
 	for(auto v : vertices)
 	{
+		v.position += v.normal * GetHeight(v.normal);
+
 		Vertices.Add(v.position);
 		Normals.Add(v.normal);
 		UV.Add(v.uv);
@@ -305,17 +290,35 @@ void AGeosphere::OnConstruction(const FTransform& Transform)
 	if(Material)
 		Mesh->SetMaterial(0, Material);
 
-	Generate(Diameter, Divisions);
+	Generate(Radius, EditorDivisions);
 }
 
 void AGeosphere::BeginPlay()
 {
 	Super::BeginPlay();
+
+	Generate(Radius, PlayDivisions);
 }
 
 void AGeosphere::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
+
+float AGeosphere::GetHeight(const FVector& pos)
+{
+	float height = 0.0f;
+	float freq = NoiseScale;
+	float amplitude = NoiseHeight;
+
+	for (int i = 0; i < 8; ++i)
+	{
+		height += USimplexNoiseBPLibrary::SimplexNoise3D(pos.X * freq, pos.Y * freq, pos.Z * freq) * amplitude;
+		amplitude *= Persistence;
+		freq *= 2;
+	}
+
+	return height;
 }
 
 void AGeosphere::ClearMeshData()
