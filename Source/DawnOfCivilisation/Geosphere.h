@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ProceduralMeshComponent.h"
 #include "GameFramework/Actor.h"
 #include "Geosphere.generated.h"
 
@@ -11,16 +12,56 @@ class DAWNOFCIVILISATION_API AGeosphere : public AActor
 {
 	GENERATED_BODY()
 	
-public:	
-	// Sets default values for this actor's properties
-	AGeosphere();
+	public:	
+		AGeosphere();
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	protected:
+		virtual void BeginPlay() override;
+		virtual void OnConstruction(const FTransform& Transform) override;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	public:	
+		// Called every frame
+		virtual void Tick(float DeltaTime) override;
 
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
+		UProceduralMeshComponent* Mesh;
+
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sphere")
+		int Divisions;
+		
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sphere")
+		float Diameter;
+
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sphere")
+		UMaterialInterface* Material;
+
+	private:
+		struct VertexPositionNormalTexture
+		{
+			FVector position, normal;
+			FVector2D uv;
+
+			VertexPositionNormalTexture(FVector pos, FVector norm, FVector2D tex) : position(pos), normal(norm), uv(tex) {}
+		};
+
+		void Generate(float diameter, size_t tessellation);
+		void ClearMeshData();
+
+		UPROPERTY()
+		TArray<FVector> Vertices;
+
+		UPROPERTY()
+		TArray<FVector> Normals;
+
+		UPROPERTY()
+		TArray<int32> Indices;
+
+		UPROPERTY()
+		TArray<FVector2D> UV;
+
+		UPROPERTY()
+		TArray<FLinearColor> VertexColors;
+
+		UPROPERTY()
+		TArray<FProcMeshTangent> Tangents;
 };
