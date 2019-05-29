@@ -46,6 +46,12 @@ class DAWNOFCIVILISATION_API AGeosphere : public AActor
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Material")
 		UMaterialInterface* Material;
 
+		UFUNCTION(BlueprintCallable)
+		void GetVertices(TArray<FVector>& vertices) { vertices = Vertices;}
+
+		UFUNCTION(BlueprintCallable)
+		FVector GetNormal(int index) { return Normals[index]; }
+
 	private:
 		struct VertexPositionNormalTexture
 		{
