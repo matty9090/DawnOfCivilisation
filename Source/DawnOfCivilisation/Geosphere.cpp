@@ -267,20 +267,50 @@ void AGeosphere::Generate(float radius, size_t tessellation)
 
 	ClearMeshData();
 
+	Normals.Init(FVector(0.0f, 0.0f, 0.0f), vertices.size());
+	Tangents.Init(FProcMeshTangent(0.0f, 0.0f, 0.0f), vertices.size());
+	VertexColors.Init(FLinearColor(0.0f, 0.0f, 0.0f), vertices.size());
+
 	for(auto v : vertices)
 	{
 		v.position += v.normal * GetHeight(v.normal);
 
 		Vertices.Add(v.position);
-		Normals.Add(v.normal);
 		UV.Add(v.uv);
 	}
 
 	for (auto i : indices)
 		Indices.Add(i);
 
-	Tangents.Init(FProcMeshTangent(0.0f, 0.0f, 0.0f), vertices.size());
-	VertexColors.Init(FLinearColor(0.0f, 0.0f, 0.0f), vertices.size());
+	for (int i = 0; i < Indices.Num(); i += 3)
+	{
+		FVector p1 = Vertices[Indices[i + 0]];
+		FVector p2 = Vertices[Indices[i + 1]];
+		FVector p3 = Vertices[Indices[i + 2]];
+
+		FVector2D t1 = UV[Indices[i + 0]];
+		FVector2D t2 = UV[Indices[i + 1]];
+		FVector2D t3 = UV[Indices[i + 2]];
+
+		FVector vector1 = p2 - p1, vector2 = p3 - p1, tangent;
+		FVector2D tuVector = t2 - t1, tvVector = t3 - t1;
+		FVector n = FVector::CrossProduct(vector2, vector1);
+		n.Normalize();
+
+		float den = 1.0f / (tuVector.X * tvVector.Y - tuVector.Y * tvVector.X);
+
+		tangent.X = (tvVector.Y * vector1.X - tvVector.X * vector2.X) * den;
+		tangent.Y = (tvVector.Y * vector1.Y - tvVector.X * vector2.Y) * den;
+		tangent.Z = (tvVector.Y * vector1.Z - tvVector.X * vector2.Z) * den;
+
+		Normals[Indices[i + 0]] = n;
+		Normals[Indices[i + 1]] = n;
+		Normals[Indices[i + 2]] = n;
+
+		Tangents[Indices[i + 0]].TangentX = tangent;
+		Tangents[Indices[i + 1]].TangentX = tangent;
+		Tangents[Indices[i + 2]].TangentX = tangent;
+	}
 
 	Mesh->CreateMeshSection_LinearColor(0, Vertices, Indices, Normals, UV, VertexColors, Tangents, true);
 }
