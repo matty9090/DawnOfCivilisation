@@ -325,9 +325,9 @@ void AGeosphere::OnConstruction(const FTransform& Transform)
 
 void AGeosphere::BeginPlay()
 {
+	Generate(Radius, PlayDivisions);
 	Super::BeginPlay();
 
-	Generate(Radius, PlayDivisions);
 }
 
 void AGeosphere::Tick(float DeltaTime)
