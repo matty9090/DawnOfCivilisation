@@ -327,7 +327,6 @@ void AGeosphere::BeginPlay()
 {
 	Generate(Radius, PlayDivisions);
 	Super::BeginPlay();
-
 }
 
 void AGeosphere::Tick(float DeltaTime)
