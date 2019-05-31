@@ -317,9 +317,6 @@ void AGeosphere::Generate(float radius, size_t tessellation)
 
 void AGeosphere::OnConstruction(const FTransform& Transform)
 {
-	if(Material)
-		Mesh->SetMaterial(0, Material);
-
 	Generate(Radius, EditorDivisions);
 }
 
