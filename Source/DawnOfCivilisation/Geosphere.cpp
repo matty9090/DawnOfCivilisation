@@ -158,9 +158,10 @@ void AGeosphere::Generate(float radius, size_t tessellation)
 	}
 
 	size_t preFixupVertexCount = vertices.size();
+
 	for (size_t i = 0; i < preFixupVertexCount; ++i)
 	{
-		bool isOnPrimeMeridian = FVector2D::ZeroVector.Equals(FVector2D(vertices[i].position.X, vertices[i].uv.X), 1.192092896e-7);
+		bool isOnPrimeMeridian = FVector2D::ZeroVector.Equals(FVector2D(vertices[i].position.X, vertices[i].uv.X), 1.192092896e-5);
 
 		if (isOnPrimeMeridian)
 		{

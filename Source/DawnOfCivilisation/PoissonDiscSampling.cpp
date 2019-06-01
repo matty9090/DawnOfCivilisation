@@ -6,7 +6,7 @@
 
 #include <algorithm>
 
-TArray<FVector2D> UPoissonDiscSampling::GeneratePoints(float radius, float regionSize, float threshold, float frequency, float fade, int numSamplesBeforeRejection)
+TArray<FVector2D> UPoissonDiscSampling::GeneratePoints(float radius, float regionSize, float threshold, float frequency, int numSamplesBeforeRejection)
 {
 	float cellSize = radius / sqrtf(2.0f);
 

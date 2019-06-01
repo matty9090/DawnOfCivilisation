@@ -15,7 +15,7 @@ class DAWNOFCIVILISATION_API UPoissonDiscSampling : public UBlueprintFunctionLib
 	
 	public:
 		UFUNCTION(BlueprintCallable)
-		static TArray<FVector2D> GeneratePoints(float radius, float regionSize, float threshold, float frequency, float fade, int numSamplesBeforeRejection = 30);
+		static TArray<FVector2D> GeneratePoints(float radius, float regionSize, float threshold, float frequency, int numSamplesBeforeRejection = 30);
 
 	private:
 		typedef std::vector<std::vector<int>> Grid;
