@@ -22,6 +22,22 @@ AGeosphere::AGeosphere()
 	Generate(100.0f, 2);
 }
 
+void AGeosphere::GetClosestVertices(TArray<int>& indices, TArray<FVector>& vertices, FVector pos, float distance)
+{
+	float d2 = distance * distance;
+
+	for(int i = 0; i < Vertices.Num(); ++i)
+	{
+		if (FVector::DistSquared(Vertices[i], pos) < d2)
+			vertices.Add(Vertices[i]), indices.Add(i);
+	}
+}
+
+void AGeosphere::GenerateMeshSection()
+{
+	Mesh->CreateMeshSection_LinearColor(0, Vertices, Indices, Normals, UV, VertexColors, Tangents, true);
+}
+
 void AGeosphere::Generate(float radius, size_t tessellation)
 {
 	std::vector<VertexPositionNormalTexture> vertices;
@@ -313,7 +329,7 @@ void AGeosphere::Generate(float radius, size_t tessellation)
 		Tangents[Indices[i + 2]].TangentX = tangent;
 	}
 
-	Mesh->CreateMeshSection_LinearColor(0, Vertices, Indices, Normals, UV, VertexColors, Tangents, true);
+	GenerateMeshSection();
 }
 
 void AGeosphere::OnConstruction(const FTransform& Transform)

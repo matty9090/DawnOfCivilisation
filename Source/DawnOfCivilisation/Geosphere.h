@@ -47,7 +47,16 @@ class DAWNOFCIVILISATION_API AGeosphere : public AActor
 		void GetVertices(TArray<FVector>& vertices) { vertices = Vertices; }
 
 		UFUNCTION(BlueprintCallable)
+		void GetClosestVertices(TArray<int>& indices, TArray<FVector>& vertices, FVector pos, float distance);
+
+		UFUNCTION(BlueprintCallable)
+		void SetVertex(int vertex, FVector v) { Vertices[vertex] = v; }
+
+		UFUNCTION(BlueprintCallable)
 		FVector GetNormal(int index) { return Normals[index]; }
+
+		UFUNCTION(BlueprintCallable)
+		void GenerateMeshSection();
 
 	private:
 		struct VertexPositionNormalTexture
