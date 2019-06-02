@@ -12,7 +12,7 @@
 #define PI 3.1415926535
 #define TWOPI (PI * 2)
 
-AGeosphere::AGeosphere()
+AGeosphere::AGeosphere() : OceanDepth(1.0f)
 {
 	PrimaryActorTick.bCanEverTick = true;
 
@@ -361,7 +361,7 @@ float AGeosphere::GetHeight(const FVector& pos)
 		freq *= 2;
 	}
 
-	return height;
+	return (height < 0.0f) ? height * OceanDepth : height;
 }
 
 void AGeosphere::ClearMeshData()
