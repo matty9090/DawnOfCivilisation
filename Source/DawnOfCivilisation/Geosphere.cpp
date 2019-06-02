@@ -12,7 +12,10 @@
 #define PI 3.1415926535
 #define TWOPI (PI * 2)
 
-AGeosphere::AGeosphere() : OceanDepth(1.0f)
+AGeosphere::AGeosphere()
+	: OceanDepth(1.0f),
+	  Collidable(true),
+	  GenerateHeights(true)
 {
 	PrimaryActorTick.bCanEverTick = true;
 
@@ -35,7 +38,7 @@ void AGeosphere::GetClosestVertices(TArray<int>& indices, TArray<FVector>& verti
 
 void AGeosphere::GenerateMeshSection()
 {
-	Mesh->CreateMeshSection_LinearColor(0, Vertices, Indices, Normals, UV, VertexColors, Tangents, true);
+	Mesh->CreateMeshSection_LinearColor(0, Vertices, Indices, Normals, UV, VertexColors, Tangents, Collidable);
 }
 
 void AGeosphere::Generate(float radius, size_t tessellation)
@@ -290,7 +293,8 @@ void AGeosphere::Generate(float radius, size_t tessellation)
 
 	for(auto v : vertices)
 	{
-		v.position += v.normal * GetHeight(v.normal);
+		if(GenerateHeights)
+			v.position += v.normal * GetHeight(v.normal);
 
 		Vertices.Add(v.position);
 		UV.Add(v.uv);
@@ -329,7 +333,19 @@ void AGeosphere::Generate(float radius, size_t tessellation)
 		Tangents[Indices[i + 2]].TangentX = tangent;
 	}
 
+	if (ReverseCulling)
+		ReverseWinding();
+
 	GenerateMeshSection();
+}
+
+void AGeosphere::ReverseWinding()
+{
+	for (int i = 0; i < Indices.Num(); i += 3)
+		Swap(Indices[i], Indices[i + 2]);
+
+	for (int i = 0; i < UV.Num(); ++i)
+		UV[i].X = 1.0f - UV[i].X;
 }
 
 void AGeosphere::OnConstruction(const FTransform& Transform)
