@@ -43,6 +43,9 @@ class DAWNOFCIVILISATION_API AGeosphere : public AActor
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Noise")
 		float Persistence;
 
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Noise")
+		float OceanDepth;
+
 		UFUNCTION(BlueprintCallable)
 		void GetVertices(TArray<FVector>& vertices) { vertices = Vertices; }
 
