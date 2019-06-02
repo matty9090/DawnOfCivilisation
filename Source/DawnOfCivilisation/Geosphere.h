@@ -46,6 +46,15 @@ class DAWNOFCIVILISATION_API AGeosphere : public AActor
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Noise")
 		float OceanDepth;
 
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Collision")
+		bool Collidable;
+
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Noise")
+		bool GenerateHeights;
+
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Rendering")
+		bool ReverseCulling;
+
 		UFUNCTION(BlueprintCallable)
 		void GetVertices(TArray<FVector>& vertices) { vertices = Vertices; }
 
@@ -72,6 +81,7 @@ class DAWNOFCIVILISATION_API AGeosphere : public AActor
 
 		void Generate(float diameter, size_t tessellation);
 		void ClearMeshData();
+		void ReverseWinding();
 		float GetHeight(const FVector& pos);
 
 		UPROPERTY()
