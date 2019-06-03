@@ -115,6 +115,9 @@ struct FLandFeatures
 	FVectorRange MountainColour;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FVectorRange WaterColour;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FScalarRange NumForests;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -143,9 +146,6 @@ struct FPlanetPreset
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FLandFeatures LandFeatures;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FVectorRange WaterColour;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FVectorRange AtmosphereColour;
