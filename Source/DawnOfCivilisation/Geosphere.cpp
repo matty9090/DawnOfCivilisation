@@ -51,6 +51,8 @@ void AGeosphere::GenerateMeshSection()
 
 void AGeosphere::Generate(float radius, size_t tessellation)
 {
+	USimplexNoiseBPLibrary::setNoiseSeed(Seed);
+
 	std::vector<VertexPositionNormalTexture> vertices;
 	std::vector<int32> indices;
 
@@ -359,8 +361,6 @@ void AGeosphere::ReverseWinding()
 
 void AGeosphere::OnConstruction(const FTransform& Transform)
 {
-	USimplexNoiseBPLibrary::setNoiseSeed(Seed);
-
 	Generate(Radius, EditorDivisions);
 }
 
