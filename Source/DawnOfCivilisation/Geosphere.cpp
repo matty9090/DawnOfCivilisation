@@ -13,16 +13,24 @@
 #define TWOPI (PI * 2)
 
 AGeosphere::AGeosphere()
-	: OceanDepth(1.0f),
+	: EditorDivisions(3),
+	  PlayDivisions(6),
+	  Radius(3000),
+	  NoiseScale(3.0f),
+	  NoiseHeight(50.0f),
+	  Persistence(0.34f),
+	  Seed(0),
+	  OceanDepth(1.0f),
 	  Collidable(true),
-	  GenerateHeights(true)
+	  GenerateHeights(true),
+	  ReverseCulling(false)
 {
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 	Mesh = CreateDefaultSubobject<UProceduralMeshComponent>(TEXT("Mesh"));
 	RootComponent = Mesh;
 
-	Generate(100.0f, 2);
+	Generate(Radius, EditorDivisions);
 }
 
 void AGeosphere::GetClosestVertices(TArray<int>& indices, TArray<FVector>& vertices, FVector pos, float distance)
@@ -155,6 +163,7 @@ void AGeosphere::Generate(float radius, size_t tessellation)
 	}
 
 	vertices.reserve(vertexPositions.size());
+
 	for (auto it = vertexPositions.begin(); it != vertexPositions.end(); ++it)
 	{
 		auto vertexValue = *it;
@@ -180,7 +189,7 @@ void AGeosphere::Generate(float radius, size_t tessellation)
 
 	for (size_t i = 0; i < preFixupVertexCount; ++i)
 	{
-		bool isOnPrimeMeridian = FVector2D::ZeroVector.Equals(FVector2D(vertices[i].position.X, vertices[i].uv.X), 1.192092896e-7);
+		bool isOnPrimeMeridian = FVector2D::ZeroVector.Equals(FVector2D(vertices[i].position.X, vertices[i].uv.X));
 
 		if (isOnPrimeMeridian)
 		{
@@ -350,6 +359,8 @@ void AGeosphere::ReverseWinding()
 
 void AGeosphere::OnConstruction(const FTransform& Transform)
 {
+	USimplexNoiseBPLibrary::setNoiseSeed(Seed);
+
 	Generate(Radius, EditorDivisions);
 }
 

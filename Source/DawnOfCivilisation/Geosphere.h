@@ -44,6 +44,9 @@ class DAWNOFCIVILISATION_API AGeosphere : public AActor
 		float Persistence;
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Noise")
+		int32 Seed;
+
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Noise")
 		float OceanDepth;
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Collision")
