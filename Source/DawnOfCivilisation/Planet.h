@@ -30,7 +30,10 @@ struct FScalarRange
 		}
 
 	private:
+		UPROPERTY()
 		float Start;
+
+		UPROPERTY()
 		float End;
 };
 
