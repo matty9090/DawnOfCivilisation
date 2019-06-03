@@ -104,7 +104,7 @@ void APlanet::Generate()
 		water->PlayDivisions = PlayDivisions;
 		water->Radius = Radius;
 		water->GenerateHeights = false;
-		water->Collidable = false;
+		water->Collidable = true;
 
 		if (PlanetMaterials.Contains(EPlanetComponent::Water) && PlanetMaterials[EPlanetComponent::Water])
 		{
