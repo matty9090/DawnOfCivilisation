@@ -48,7 +48,7 @@ struct FVectorRange
 		{
 			return FVector (rand.FRandRange(Start.X, End.X),
 							rand.FRandRange(Start.Y, End.Y),
-							rand.FRandRange(Start.X, End.X));
+							rand.FRandRange(Start.Z, End.Z));
 		}
 
 	private:
