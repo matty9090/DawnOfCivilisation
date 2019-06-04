@@ -1,5 +1,6 @@
 #include "Planet.h"
 #include "Geosphere.h"
+#include "ColourSpace.h"
 #include "Materials/MaterialInstanceDynamic.h"
 
 #include <time.h>
@@ -22,10 +23,9 @@ APlanet::APlanet()
 	Rocky.HasAtmosphere = FBoolRange::MakeEnabled;
 	Rocky.HasWater = FBoolRange::MakeRandom;
 	Rocky.AtmosphereColour = FVectorRange(FVector(0.0f, 0.0f, 0.0f), FVector(1.0f, 1.0f, 1.0f));
-	Rocky.WaterColour = FVectorRange(FVector(0.0f, 0.0f, 0.0f), FVector(1.0f, 1.0f, 1.0f));
 	
 	Rocky.TerrainNoise = {
-		FScalarRange(0.2f, 8.0f),
+		FScalarRange(1.0f, 8.0f),
 		FScalarRange(10.0f, 70.0f),
 		FScalarRange(0.2f, 0.4f),
 		FScalarRange(2.0f, 7.0f),
@@ -33,9 +33,11 @@ APlanet::APlanet()
 	};
 
 	Rocky.LandFeatures = {
-		FVectorRange(FVector(0.88f, 0.31f, 0.1f)),
-		FVectorRange(FVector(0.01f, 0.16f, 0.0f)),
-		FVectorRange(FVector(0.01f, 0.10f, 0.1f)),
+		FVectorRange(FVector(0.88f, 0.31f, 0.10f)),
+		FVectorRange(FVector(0.01f, 0.16f, 0.00f)),
+		FVectorRange(FVector(0.01f, 0.10f, 0.10f)),
+		//FVectorRange(FVector(0.04f, 0.23f, 0.37f)),
+		FVectorRange(FVector(0.0f, 100.0f, 60.0f), FVector(360.0f, 100.0f, 60.0f)),
 		FScalarRange(0.0f, 20.0f),
 		FScalarRange(0.0f, 12.0f)
 	};
@@ -87,6 +89,7 @@ void APlanet::Generate()
 		if (PlanetMaterials.Contains(EPlanetComponent::Terrain) && PlanetMaterials[EPlanetComponent::Terrain])
 		{
 			UMaterialInstanceDynamic* mat = terrain->Mesh->CreateDynamicMaterialInstance(0, PlanetMaterials[EPlanetComponent::Terrain]);
+			mat->SetScalarParameterValue(FName("Radius"), Radius);
 			mat->SetVectorParameterValue(FName("Sand Colour"), preset.LandFeatures.BeachColour.GetValue(RandomStream));
 			mat->SetVectorParameterValue(FName("Grass Colour"), preset.LandFeatures.LandColour.GetValue(RandomStream));
 			mat->SetVectorParameterValue(FName("Rock Colour"), preset.LandFeatures.MountainColour.GetValue(RandomStream));
@@ -104,12 +107,22 @@ void APlanet::Generate()
 		water->PlayDivisions = PlayDivisions;
 		water->Radius = Radius;
 		water->GenerateHeights = false;
-		water->Collidable = false;
-
+		water->Collidable = true;
+		
 		if (PlanetMaterials.Contains(EPlanetComponent::Water) && PlanetMaterials[EPlanetComponent::Water])
-		{
+		{			
+			auto shallow = preset.LandFeatures.WaterColour.GetValue(RandomStream);
+
+			auto deep = shallow - FVector(0.0f, 0.0f, 10.0f);
+			deep = UColourSpace::HSLToRGB(deep);
+
+			auto shore = shallow + FVector(0.0f, 0.0f, 30.0f);
+			shore = UColourSpace::HSLToRGB(shore);
+
 			UMaterialInstanceDynamic* mat = water->Mesh->CreateDynamicMaterialInstance(0, PlanetMaterials[EPlanetComponent::Water]);
-			//mat->SetVectorParameterValue(FName("Colour"), preset.AtmosphereColour.GetValue(RandomStream));
+			mat->SetVectorParameterValue(FName("Shallow Water"), UColourSpace::HSLToRGB(shallow));
+			mat->SetVectorParameterValue(FName("Deep Water"), deep);
+			mat->SetVectorParameterValue(FName("Shore"), shore);
 			water->Mesh->SetMaterial(0, mat);
 		}
 	}
