@@ -1,0 +1,28 @@
+#pragma once
+
+#include "CoreMinimal.h"
+#include "UObject/NoExportTypes.h"
+#include "GraphNode.h"
+#include "NodeGraph.generated.h"
+
+UCLASS()
+class DAWNOFCIVILISATION_API UNodeGraph : public UObject
+{
+	GENERATED_BODY()
+	
+	public:
+		UNodeGraph() {}
+
+		void Generate(TArray<FVector> vertices, TArray<FVector> normals, TArray<int32> indices, TArray<int32> costs);
+		int  Heuristic(int start, int end);
+
+		UFUNCTION(BlueprintCallable)
+		bool Pathfind(int start, int end, TArray<UGraphNode*>& path);
+
+		UFUNCTION(BlueprintCallable)
+		UGraphNode* GetNodeByIndex(int index) { return Nodes[index]; }
+
+	private:
+		UPROPERTY()
+		TArray<UGraphNode*> Nodes;
+};
