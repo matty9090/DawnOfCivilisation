@@ -304,8 +304,8 @@ void AGeosphere::Generate(float radius, size_t tessellation)
 
 	for(auto v : vertices)
 	{
-		float height = 0;
-		int cost = 0;
+		float height = 0.0f;
+		int cost = 1;
 
 		if(GenerateHeights)
 		{
@@ -313,8 +313,8 @@ void AGeosphere::Generate(float radius, size_t tessellation)
 			v.position += v.normal * height;
 		}
 
-		if (height < 0)
-			cost = 5;
+		if (height < 0.0f)
+			cost = 1000000;
 
 		Vertices.Add(v.position);
 		UV.Add(v.uv);

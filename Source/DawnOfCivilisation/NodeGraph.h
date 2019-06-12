@@ -17,7 +17,7 @@ class DAWNOFCIVILISATION_API UNodeGraph : public UObject
 		int  Heuristic(int start, int end);
 
 		UFUNCTION(BlueprintCallable)
-		bool Pathfind(int start, int end, TArray<UGraphNode*>& path);
+		bool Pathfind(int start, int end, TArray<UGraphNode*>& path, TArray<UGraphNode*>& closedList);
 
 		UFUNCTION(BlueprintCallable)
 		UGraphNode* GetNodeByIndex(int index) { return Nodes[index]; }
