@@ -1,24 +1,34 @@
 #include "NodeGraph.h"
 #include "Geosphere.h"
 
+#include <set>
+#include <map>
+
 void UNodeGraph::Generate(TArray<FVector> vertices, TArray<FVector> normals, TArray<int32> indices, TArray<int32> costs)
 {
-	/*TMap<int, int> removed;
+	//TMap<int, int> removed;
 
-	for (int i = 0; i < vertices.Num(); ++i)
+	/*for (int i = 0; i < vertices.Num(); ++i)
 	{
-		for (int j = 0; j < vertices.Num(); ++j)
+		for (int j = 0; j < vertices.Num();)
 		{
 			if (i != j && vertices[i].Equals(vertices[j], 0.1f))
-				removed.Add(j, i);
+			{
+				//removed.Add(j, i);
+				vertices.RemoveAt(j);
+			}
+			else
+				++j;
 		}
-	}
+	}*/
 
-	for(int i = 0; i < indices.Num(); ++i)
+	/*for(int i = 0; i < indices.Num(); ++i)
 	{
 		if (removed.Find(indices[i]) != NULL)
 			indices[i] = removed[indices[i]];
 	}*/
+
+	Vertices = vertices;
 
 	for (int i = 0; i < vertices.Num(); ++i)
 	{
@@ -30,13 +40,11 @@ void UNodeGraph::Generate(TArray<FVector> vertices, TArray<FVector> normals, TAr
 		Nodes.Add(node);
 	}
 
-	/*AGeosphere* sphere = static_cast<AGeosphere*>(GetOuter());
-
-	for (int i = 0; i < Nodes.Num(); ++i)
+	/*for (int i = 0; i < Nodes.Num(); ++i)
 	{
 		TArray<int32> ind;
 		FOccluderVertexArray vert;
-		sphere->GetClosestVertices(ind, vert, Nodes[i]->Position, 60.0f);
+		GetClosestVertices(ind, vert, Nodes[i]->Position, 140.0f);
 
 		for(auto index : ind)
 			Nodes[i]->Children.Add(Nodes[index]);
@@ -58,22 +66,22 @@ void UNodeGraph::Generate(TArray<FVector> vertices, TArray<FVector> normals, TAr
 
 bool UNodeGraph::Pathfind(int start, int end, TArray<UGraphNode*>& path, TArray<UGraphNode*>& closedList)
 {
-	TSet<int> closed, open = { start };
+	std::set<int> closed, open = { start };
 
-	TMap<int, int> data;
-	TMap<int, int> gScore;
-	TMap<int, int> fScore;
+	std::map<int, int> data;
+	std::map<int, int> gScore;
+	std::map<int, int> fScore;
 
 	for(int i = 0; i < Nodes.Num(); ++i)
 	{
-		gScore.Add(i, 99999999);
-		fScore.Add(i, 99999999);
+		gScore[i] = 99999999;
+		fScore[i] = 99999999;
 	}
 
 	gScore[start] = 0;
 	fScore[start] = Heuristic(start, end);
 
-	while(open.Num() > 0)
+	while(!open.empty())
 	{
 		int current, minScore = 99999999;
 
@@ -86,33 +94,32 @@ bool UNodeGraph::Pathfind(int start, int end, TArray<UGraphNode*>& path, TArray<
 			int n = end;
 			path.Add(Nodes[current]);
 
-			while (data.Find(n) != NULL)
+			while (data.find(n) != data.end())
 			{
 				n = data[n];
+				UE_LOG(LogTemp, Display, TEXT("Cost: %d"), Nodes[n]->Cost);
 				path.Add(Nodes[n]);
 			}
 
 			return true;
 		}
 
-		open.Remove(current);
-		closed.Add(current);
+		open.erase(current);
+		closed.insert(current);
 
 		for(auto node : Nodes[current]->Children)
 		{
-			if (node->Cost <= 0 || closed.Find(node->Id) != NULL)
+			if (node->Cost <= 0 || closed.find(node->Id) != closed.end())
 				continue;
 
 			int nScore = gScore[current] + Nodes[current]->Cost;
 
-			UE_LOG(LogTemp, Display, TEXT("Cost: %d"), Nodes[current]->Cost);
-
-			if (open.Find(node->Id) == NULL)
-				open.Add(node->Id);
+			if (open.find(node->Id) == open.end())
+				open.insert(node->Id);
 			else if (nScore >= gScore[node->Id])
 				continue;
 
-			data.Add(node->Id, current);
+			data[node->Id] = current;
 			gScore[node->Id] = nScore;
 			fScore[node->Id] = nScore + Heuristic(node->Id, end);
 		}
@@ -134,4 +141,15 @@ int UNodeGraph::Heuristic(int start, int end)
 
 	//return abs(p1.X - p2.X) + abs(p1.Y - p2.Y) + abs(p1.Z - p2.Z);
 	return acosf(FVector::DotProduct(p1, p2));
+}
+
+void UNodeGraph::GetClosestVertices(TArray<int>& indices, TArray<FVector>& vertices, FVector pos, float distance)
+{
+	float d2 = distance * distance;
+
+	for (int i = 0; i < Vertices.Num(); ++i)
+	{
+		if (FVector::DistSquared(Vertices[i], pos) < d2)
+			vertices.Add(Vertices[i]), indices.Add(i);
+	}
 }

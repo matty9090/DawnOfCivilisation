@@ -314,7 +314,7 @@ void AGeosphere::Generate(float radius, size_t tessellation)
 		}
 
 		if (height < 0.0f)
-			cost = 1000000;
+			cost = 6;
 
 		Vertices.Add(v.position);
 		UV.Add(v.uv);
@@ -408,6 +408,7 @@ void AGeosphere::ClearMeshData()
 {
 	Vertices.Empty();
 	Indices.Empty();
+	Costs.Empty();
 	Normals.Empty();
 	VertexColors.Empty();
 	Tangents.Empty();
