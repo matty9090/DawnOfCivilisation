@@ -97,7 +97,6 @@ bool UNodeGraph::Pathfind(int start, int end, TArray<UGraphNode*>& path, TArray<
 			while (data.find(n) != data.end())
 			{
 				n = data[n];
-				UE_LOG(LogTemp, Display, TEXT("Cost: %d"), Nodes[n]->Cost);
 				path.Add(Nodes[n]);
 			}
 
