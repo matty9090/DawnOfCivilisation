@@ -304,11 +304,21 @@ void AGeosphere::Generate(float radius, size_t tessellation)
 
 	for(auto v : vertices)
 	{
+		float height = 0.0f;
+		int cost = 1;
+
 		if(GenerateHeights)
-			v.position += v.normal * GetHeight(v.normal);
+		{
+			height = GetHeight(v.normal);
+			v.position += v.normal * height;
+		}
+
+		if (height < 0.0f)
+			cost = 6;
 
 		Vertices.Add(v.position);
 		UV.Add(v.uv);
+		Costs.Add(cost);
 	}
 
 	for (auto i : indices)
@@ -346,6 +356,9 @@ void AGeosphere::Generate(float radius, size_t tessellation)
 
 	if (ReverseCulling)
 		ReverseWinding();
+
+	NodeGraph = NewObject<UNodeGraph>();
+	NodeGraph->Generate(Vertices, Normals, Indices, Costs);
 
 	GenerateMeshSection();
 }
@@ -395,6 +408,7 @@ void AGeosphere::ClearMeshData()
 {
 	Vertices.Empty();
 	Indices.Empty();
+	Costs.Empty();
 	Normals.Empty();
 	VertexColors.Empty();
 	Tangents.Empty();

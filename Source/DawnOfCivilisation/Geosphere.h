@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "ProceduralMeshComponent.h"
 #include "GameFramework/Actor.h"
+#include "NodeGraph.h"
 #include "Geosphere.generated.h"
 
 UCLASS()
@@ -73,6 +74,9 @@ class DAWNOFCIVILISATION_API AGeosphere : public AActor
 		UFUNCTION(BlueprintCallable)
 		void GenerateMeshSection();
 
+		UPROPERTY(BlueprintReadOnly)
+		UNodeGraph* NodeGraph;
+
 	private:
 		struct VertexPositionNormalTexture
 		{
@@ -95,6 +99,9 @@ class DAWNOFCIVILISATION_API AGeosphere : public AActor
 
 		UPROPERTY()
 		TArray<int32> Indices;
+
+		UPROPERTY()
+		TArray<int32> Costs;
 
 		UPROPERTY()
 		TArray<FVector2D> UV;

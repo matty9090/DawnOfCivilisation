@@ -25,7 +25,7 @@ APlanet::APlanet()
 	Rocky.AtmosphereColour = FVectorRange(FVector(0.0f, 0.0f, 0.0f), FVector(1.0f, 1.0f, 1.0f));
 	
 	Rocky.TerrainNoise = {
-		FScalarRange(1.0f, 8.0f),
+		FScalarRange(0.5f, 4.0f),
 		FScalarRange(10.0f, 70.0f),
 		FScalarRange(0.2f, 0.4f),
 		FScalarRange(2.0f, 7.0f),
