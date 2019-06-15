@@ -17,7 +17,7 @@ struct FNodeGraphSettings
 	bool Less;
 };
 
-UCLASS()
+UCLASS(BlueprintType)
 class DAWNOFCIVILISATION_API UNodeGraph : public UObject
 {
 	GENERATED_BODY()
@@ -33,7 +33,10 @@ class DAWNOFCIVILISATION_API UNodeGraph : public UObject
 		void GetClosestVertices(TArray<int>& indices, TArray<FVector>& vertices, FVector pos, float distance);
 
 		UFUNCTION(BlueprintCallable)
-		bool Pathfind(int start, int end, TArray<UGraphNode*>& path, TArray<UGraphNode*>& closedList);
+		void GetClosestNode(int& index, FVector& vertex, FVector pos, float threshold = 200.0f);
+
+		UFUNCTION(BlueprintCallable)
+		bool Pathfind(int start, int end, TArray<UGraphNode*>& path);
 
 		UFUNCTION(BlueprintCallable)
 		UGraphNode* GetNodeByIndex(int index) { return index < Nodes.Num() ? Nodes[index] : NULL; }

@@ -69,7 +69,7 @@ void UNodeGraph::Generate(TArray<FVector> vertices, TArray<FVector> normals, TAr
 	}
 }
 
-bool UNodeGraph::Pathfind(int start, int end, TArray<UGraphNode*>& path, TArray<UGraphNode*>& closedList)
+bool UNodeGraph::Pathfind(int start, int end, TArray<UGraphNode*>& path)
 {
 	std::set<int> closed, open = { start };
 
@@ -79,8 +79,8 @@ bool UNodeGraph::Pathfind(int start, int end, TArray<UGraphNode*>& path, TArray<
 
 	for(int i = 0; i < Nodes.Num(); ++i)
 	{
-		gScore[i] = 99999999;
-		fScore[i] = 99999999;
+		gScore[i] = std::numeric_limits<int>::max();
+		fScore[i] = std::numeric_limits<int>::max();
 	}
 
 	gScore[start] = 0;
@@ -88,7 +88,7 @@ bool UNodeGraph::Pathfind(int start, int end, TArray<UGraphNode*>& path, TArray<
 
 	while(!open.empty())
 	{
-		int current, minScore = 99999999;
+		int current, minScore = std::numeric_limits<int>::max();
 
 		for (auto n : open)
 			if (fScore[n] < minScore)
@@ -129,9 +129,6 @@ bool UNodeGraph::Pathfind(int start, int end, TArray<UGraphNode*>& path, TArray<
 		}
 	}
 
-	for(auto n : closed)
-		closedList.Add(Nodes[n]);
-
 	return false;
 }
 
@@ -154,6 +151,23 @@ void UNodeGraph::GetClosestVertices(TArray<int>& indices, TArray<FVector>& verti
 	{
 		if (FVector::DistSquared(Vertices[i], pos) < d2)
 			vertices.Add(Vertices[i]), indices.Add(i);
+	}
+}
+
+void UNodeGraph::GetClosestNode(int& index, FVector& vertex, FVector pos, float threshold)
+{
+	float d2 = threshold * threshold;
+	float minDist = std::numeric_limits<float>::max();
+
+	for (int i = 0; i < Vertices.Num(); ++i)
+	{
+		float d = FVector::DistSquared(Vertices[i], pos);
+
+		if (d < d2 && d < minDist)
+		{
+			index = i, vertex = Vertices[i];
+			minDist = d2;
+		}
 	}
 }
 
