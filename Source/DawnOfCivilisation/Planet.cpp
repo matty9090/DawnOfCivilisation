@@ -21,7 +21,7 @@ APlanet::APlanet()
 	Rocky.Name = "Rocky";
 	Rocky.HasTerrain = FBoolRange::MakeEnabled;
 	Rocky.HasAtmosphere = FBoolRange::MakeEnabled;
-	Rocky.HasWater = FBoolRange::MakeRandom;
+	Rocky.HasWater = FBoolRange::MakeEnabled;
 	Rocky.AtmosphereColour = FVectorRange(FVector(0.0f, 0.0f, 0.0f), FVector(1.0f, 1.0f, 1.0f));
 	
 	Rocky.TerrainNoise = {

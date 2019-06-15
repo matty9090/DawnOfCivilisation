@@ -19,9 +19,6 @@ void UNodeGraph::Generate(TArray<FVector> vertices, TArray<FVector> normals, TAr
 	
 	UGameplayStatics::GetAllActorsWithTag(World, "PlanetObstacle", Obstacles);
 
-	for (auto o : Obstacles)
-		UE_LOG(LogTemp, Display, TEXT("%s"), *o->GetClass()->GetName());
-
 	for (int i = 0; i < vertices.Num(); ++i)
 	{
 		UGraphNode* node = NewObject<UGraphNode>();
@@ -34,7 +31,7 @@ void UNodeGraph::Generate(TArray<FVector> vertices, TArray<FVector> normals, TAr
 		{
 			float pos = (node->Position.Size() - Radius) / Height;
 
-			if (!IsObstacleInRadius(node->Position, 0.0f))
+			if (!IsObstacleInRadius(node->Position))
 			{
 				if (setting.Value.Less)
 					node->Cost = (pos < setting.Key) ? setting.Value.Cost : node->Cost;
@@ -164,11 +161,11 @@ bool UNodeGraph::IsObstacleInRadius(FVector pos, float threshold)
 {
 	for(auto o : Obstacles)
 	{
-		if(Attributes.Find(o->GetClass()->GetName()) != NULL)
-		{
-			float d = Attributes[o->GetClass()->GetName()];
+		auto name = o->GetClass()->GetName().LeftChop(2);
 
-			if (FVector::Dist(o->GetActorLocation(), pos) < d + threshold)
+		if(Attributes.Find(name) != NULL)
+		{
+			if (FVector::Dist(o->GetActorLocation(), pos) < Attributes[name] + threshold)
 				return true;
 		}
 	}

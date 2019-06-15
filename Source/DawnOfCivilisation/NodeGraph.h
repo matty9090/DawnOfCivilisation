@@ -60,5 +60,5 @@ class DAWNOFCIVILISATION_API UNodeGraph : public UObject
 		UPROPERTY()
 		TArray<AActor*> Obstacles;
 
-		bool IsObstacleInRadius(FVector pos, float threshold = 40.0f);
+		bool IsObstacleInRadius(FVector pos, float threshold = 0.0f);
 };

@@ -355,8 +355,8 @@ void AGeosphere::Generate(float radius, size_t tessellation)
 		ReverseWinding();
 
 	TMap<FString, float> attrs;
-	attrs.Add("Tree_C", 100.0f);
-	attrs.Add("Mountain_C", 500.0f);
+	attrs.Add("Tree", 100.0f);
+	attrs.Add("Mountain", 500.0f);
 
 	NodeGraph = NewObject<UNodeGraph>();
 	NodeGraph->SetAttributes(GetWorld(), Radius, NoiseHeight, attrs);
