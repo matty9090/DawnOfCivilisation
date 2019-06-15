@@ -1,34 +1,26 @@
 #include "NodeGraph.h"
 #include "Geosphere.h"
+#include "Kismet/GameplayStatics.h"
 
 #include <set>
 #include <map>
 
-void UNodeGraph::Generate(TArray<FVector> vertices, TArray<FVector> normals, TArray<int32> indices, TArray<int32> costs)
+void UNodeGraph::SetAttributes(UWorld* world, float radius, float height, TMap<FString, float> attrs)
 {
-	//TMap<int, int> removed;
+	World = world;
+	Radius = radius;
+	Height = height;
+	Attributes = attrs;
+}
 
-	/*for (int i = 0; i < vertices.Num(); ++i)
-	{
-		for (int j = 0; j < vertices.Num();)
-		{
-			if (i != j && vertices[i].Equals(vertices[j], 0.1f))
-			{
-				//removed.Add(j, i);
-				vertices.RemoveAt(j);
-			}
-			else
-				++j;
-		}
-	}*/
-
-	/*for(int i = 0; i < indices.Num(); ++i)
-	{
-		if (removed.Find(indices[i]) != NULL)
-			indices[i] = removed[indices[i]];
-	}*/
-
+void UNodeGraph::Generate(TArray<FVector> vertices, TArray<FVector> normals, TArray<int32> indices, TMap<float, FNodeGraphSettings> costSettings)
+{
 	Vertices = vertices;
+	
+	UGameplayStatics::GetAllActorsWithTag(World, "PlanetObstacle", Obstacles);
+
+	for (auto o : Obstacles)
+		UE_LOG(LogTemp, Display, TEXT("%s"), *o->GetClass()->GetName());
 
 	for (int i = 0; i < vertices.Num(); ++i)
 	{
@@ -36,19 +28,35 @@ void UNodeGraph::Generate(TArray<FVector> vertices, TArray<FVector> normals, TAr
 		node->Id = i;
 		node->Position = vertices[i];
 		node->Normal = normals[i];
-		node->Cost = costs[i];
+		node->Cost = 1;
+
+		for(auto setting : costSettings)
+		{
+			float pos = (node->Position.Size() - Radius) / Height;
+
+			if (!IsObstacleInRadius(node->Position, 0.0f))
+			{
+				if (setting.Value.Less)
+					node->Cost = (pos < setting.Key) ? setting.Value.Cost : node->Cost;
+				else
+					node->Cost = (pos > setting.Key) ? setting.Value.Cost : node->Cost;
+			}
+			else
+				node->Cost = 0;
+		}
+
 		Nodes.Add(node);
 	}
 
-	/*for (int i = 0; i < Nodes.Num(); ++i)
+	for (int i = 0; i < Nodes.Num(); ++i)
 	{
 		TArray<int32> ind;
 		FOccluderVertexArray vert;
 		GetClosestVertices(ind, vert, Nodes[i]->Position, 140.0f);
 
-		for(auto index : ind)
+		for (auto index : ind)
 			Nodes[i]->Children.Add(Nodes[index]);
-	}*/
+	}
 
 	for (int i = 0; i < indices.Num(); i += 3)
 	{
@@ -138,7 +146,6 @@ int UNodeGraph::Heuristic(int start, int end)
 	p1.Normalize();
 	p2.Normalize();
 
-	//return abs(p1.X - p2.X) + abs(p1.Y - p2.Y) + abs(p1.Z - p2.Z);
 	return acosf(FVector::DotProduct(p1, p2));
 }
 
@@ -151,4 +158,20 @@ void UNodeGraph::GetClosestVertices(TArray<int>& indices, TArray<FVector>& verti
 		if (FVector::DistSquared(Vertices[i], pos) < d2)
 			vertices.Add(Vertices[i]), indices.Add(i);
 	}
+}
+
+bool UNodeGraph::IsObstacleInRadius(FVector pos, float threshold)
+{
+	for(auto o : Obstacles)
+	{
+		if(Attributes.Find(o->GetClass()->GetName()) != NULL)
+		{
+			float d = Attributes[o->GetClass()->GetName()];
+
+			if (FVector::Dist(o->GetActorLocation(), pos) < d + threshold)
+				return true;
+		}
+	}
+
+	return false;
 }

@@ -74,6 +74,9 @@ class DAWNOFCIVILISATION_API AGeosphere : public AActor
 		UFUNCTION(BlueprintCallable)
 		void GenerateMeshSection();
 
+		UFUNCTION(BlueprintCallable)
+		void CalculateNodeGraph(TMap<float, FNodeGraphSettings> costSettings) { NodeGraph->Generate(Vertices, Normals, Indices, costSettings); }
+
 		UPROPERTY(BlueprintReadOnly)
 		UNodeGraph* NodeGraph;
 
