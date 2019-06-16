@@ -64,4 +64,5 @@ class DAWNOFCIVILISATION_API UNodeGraph : public UObject
 		TArray<AActor*> Obstacles;
 
 		bool IsObstacleInRadius(FVector pos, float threshold = 0.0f);
+		float Bezier(float p1, float p2, float p3, float p4, float t);
 };

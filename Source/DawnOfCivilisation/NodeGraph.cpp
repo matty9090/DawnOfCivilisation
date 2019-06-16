@@ -1,5 +1,6 @@
 #include "NodeGraph.h"
 #include "Geosphere.h"
+#include "Algo/Reverse.h"
 #include "Kismet/GameplayStatics.h"
 
 #include <set>
@@ -105,6 +106,8 @@ bool UNodeGraph::Pathfind(int start, int end, TArray<UGraphNode*>& path)
 				path.Add(Nodes[n]);
 			}
 
+			Algo::Reverse(path);
+
 			return true;
 		}
 
@@ -166,7 +169,7 @@ void UNodeGraph::GetClosestNode(int& index, FVector& vertex, FVector pos, float 
 		if (d < d2 && d < minDist)
 		{
 			index = i, vertex = Vertices[i];
-			minDist = d2;
+			minDist = d;
 		}
 	}
 }
@@ -185,4 +188,9 @@ bool UNodeGraph::IsObstacleInRadius(FVector pos, float threshold)
 	}
 
 	return false;
+}
+
+float UNodeGraph::Bezier(float p1, float p2, float p3, float p4, float t)
+{
+	return powf(1 - t, 3)* p1 + 3 * t * powf(1 - t, 2) * p2 + 3 * t * t * (1 - t) * p3 + t * t * t * p4;
 }
