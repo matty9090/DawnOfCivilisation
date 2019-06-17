@@ -17,7 +17,7 @@
    version="1.1"
    id="SVGRoot"
    sodipodi:docname="Circle.svg"
-   inkscape:export-filename="C:\Users\Matty\Documents\Projects\DawnOfCivilisation\Textures\UI\UI_Energy.png"
+   inkscape:export-filename="C:\Users\Matty\Documents\Projects\DawnOfCivilisation\Textures\UI\UI_Building.png"
    inkscape:export-xdpi="407.10156"
    inkscape:export-ydpi="407.10156"
    inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
@@ -101,16 +101,16 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="4"
-     inkscape:cx="46.588787"
+     inkscape:cx="43.338787"
      inkscape:cy="68.138516"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="layer3"
      showgrid="false"
-     inkscape:window-width="673"
-     inkscape:window-height="405"
-     inkscape:window-x="1269"
-     inkscape:window-y="0"
-     inkscape:window-maximized="0"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="1272"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
      inkscape:grid-bbox="true"
      showborder="true"
      borderlayer="false"
@@ -166,7 +166,7 @@
        style="display:inline"
        id="_18_School_Building"
        data-name="18 School Building"
-       transform="matrix(0.73842046,0,0,0.77850854,15.237158,10.578813)">
+       transform="matrix(0.67227416,0,0,0.70923514,20.095028,16.033246)">
       <path
          id="path6840"
          d="M 40,104 H 20 a 4,4 0 0 1 -4,-4 V 71.71 l 24,-16 z m 48,0 h 20 a 4,4 0 0 0 4,-4 V 71.71 l -24,-16 z"
@@ -229,12 +229,12 @@
          style="fill:#1d6694" />
       <polygon
          id="polygon6860"
-         points="64,24 40,40 40,104 88,104 88,40 "
+         points="40,104 88,104 88,40 64,24 40,40 "
          class="cls-9"
          style="fill:#f2f2f2" />
       <polygon
          id="polygon6862"
-         points="64,24 40,40 40,104 42,104 42,40 65,24.67 "
+         points="65,24.67 64,24 40,40 40,104 42,104 42,40 "
          class="cls-10"
          style="fill:#f7f7f7" />
       <path
@@ -269,7 +269,7 @@
          style="fill:#4d91bb" />
       <polygon
          id="polygon6874"
-         points="72,102.71 56,103.35 56,104 72,104 "
+         points="56,103.35 56,104 72,104 72,102.71 "
          class="cls-7"
          style="fill:#2175aa" />
       <path
@@ -308,206 +308,6 @@
          class="cls-7"
          inkscape:connector-curvature="0"
          style="fill:#2175aa" />
-    </g>
-    <g
-       transform="matrix(0.73842046,0,0,0.77850854,15.237158,10.578813)"
-       data-name="18 School Building"
-       id="g6995"
-       style="display:inline">
-      <path
-         style="fill:#cccccc"
-         inkscape:connector-curvature="0"
-         class="cls-1"
-         d="M 40,104 H 20 a 4,4 0 0 1 -4,-4 V 71.71 l 24,-16 z m 48,0 h 20 a 4,4 0 0 0 4,-4 V 71.71 l -24,-16 z"
-         id="path6947" />
-      <path
-         style="fill:#e6e6e6"
-         inkscape:connector-curvature="0"
-         class="cls-2"
-         d="M 17.1,100 V 71.71 L 40,56.44 V 55.7 l -24,16 V 100 a 4,4 0 0 0 4,4 h 1.1 a 4,4 0 0 1 -4,-4 z"
-         id="path6949" />
-      <path
-         style="fill:#b3b3b3"
-         inkscape:connector-curvature="0"
-         class="cls-3"
-         d="m 93.72,64.53 c 18,12 17,11.58 18.28,11.58 v -4.4 l -24,-16 V 104 h 20 a 4,4 0 0 0 4,-4 v -1.86 a 4,4 0 0 1 -4,4 H 94.46 A 3.46,3.46 0 0 1 91,98.69 V 66 a 1.75,1.75 0 0 1 2.72,-1.47 z"
-         id="path6951" />
-      <path
-         style="fill:#b3b3b3"
-         inkscape:connector-curvature="0"
-         class="cls-3"
-         d="m 16,71.71 v 4.4 a 3,3 0 0 0 1.66,-0.5 L 34.28,64.53 A 1.75,1.75 0 0 1 37,66 v 31.65 a 4.49,4.49 0 0 1 -4.49,4.49 H 20 a 4,4 0 0 1 -4,-4 V 100 a 4,4 0 0 0 4,4 H 40 V 55.71 Z"
-         id="path6953" />
-      <path
-         style="fill:#d2423f"
-         inkscape:connector-curvature="0"
-         class="cls-4"
-         d="M 110.34,74.21 64,43.31 17.66,74.21 c -3.3,2.2 -6.63,-2.79 -3.33,-5 l 48,-32 a 3,3 0 0 1 3.33,0 l 48,32 c 3.28,2.19 -0.01,7.2 -3.32,5 z"
-         id="path6955" />
-      <path
-         style="fill:#dd6966"
-         inkscape:connector-curvature="0"
-         class="cls-5"
-         d="m 62.24,38 a 3,3 0 0 1 3.33,0 c 51.67,34.45 49.29,32.19 49.33,34.44 a 3,3 0 0 0 -1.23,-3.23 l -48,-32 a 3,3 0 0 0 -3.33,0 C 10.3,71.9 13,69.43 13,71.76 13.42,70.14 10.54,72.47 62.24,38 Z"
-         id="path6957" />
-      <path
-         style="fill:#ba3b38"
-         inkscape:connector-curvature="0"
-         class="cls-6"
-         d="m 114.94,71.15 a 3,3 0 0 1 -4.61,1.92 C 90,59.5 91,61.76 91,54.1 l -3,-2 v 6.08 l -24,-16 -24,16 V 52.1 l -3,2 c 0,2.61 0.47,5.77 -2.67,7.86 L 17.66,73.07 a 3,3 0 0 1 -4.61,-1.92 3,3 0 0 0 4.61,3.06 L 37,61.31 l 27,-18 46.34,30.89 a 3,3 0 0 0 4.61,-3.06 z"
-         id="path6959" />
-      <path
-         style="fill:#2175aa"
-         inkscape:connector-curvature="0"
-         class="cls-7"
-         d="m 31,89.1 h -6 a 2,2 0 0 1 -2,-2 v -6 a 2,2 0 0 1 2,-2 h 6 a 2,2 0 0 1 2,2 v 6 a 2,2 0 0 1 -2,2 z m 74,-2 v -6 a 2,2 0 0 0 -2,-2 h -6 a 2,2 0 0 0 -2,2 v 6 a 2,2 0 0 0 2,2 h 6 a 2,2 0 0 0 2,-2 z"
-         id="path6961" />
-      <path
-         style="fill:#1d6694"
-         inkscape:connector-curvature="0"
-         class="cls-8"
-         d="m 23.21,87.31 v -6 a 2,2 0 0 1 2,-2 h 6 A 2,2 0 0 1 32.51,79.8 2,2 0 0 0 31,79.1 h -6 a 2,2 0 0 0 -2,2 v 6 a 2,2 0 0 0 0.7,1.51 2,2 0 0 1 -0.49,-1.3 z"
-         id="path6963" />
-      <path
-         style="fill:#1d6694"
-         inkscape:connector-curvature="0"
-         class="cls-8"
-         d="m 95.21,81.31 a 2,2 0 0 1 2,-2 h 6 a 2,2 0 0 1 1.3,0.49 2,2 0 0 0 -1.51,-0.7 h -6 a 2,2 0 0 0 -2,2 c 0,5.9 -0.3,6.65 0.7,7.51 -0.77,-0.89 -0.49,-1.61 -0.49,-7.3 z"
-         id="path6965" />
-      <polygon
-         style="fill:#f2f2f2"
-         class="cls-9"
-         points="64,24 40,40 40,104 88,104 88,40 "
-         id="polygon6967" />
-      <polygon
-         style="fill:#f7f7f7"
-         class="cls-10"
-         points="64,24 40,40 40,104 42,104 42,40 65,24.67 "
-         id="polygon6969" />
-      <path
-         style="fill:#e6e6e6"
-         inkscape:connector-curvature="0"
-         class="cls-2"
-         d="M 64,24 40,40 v 5 a 3,3 0 0 0 1.66,-0.5 l 19,-12.67 a 6,6 0 0 1 6.66,0 l 16,10.67 a 6,6 0 0 1 2.67,5 V 98 a 4.29,4.29 0 0 1 -4.12,4.29 L 40,104 H 88 V 40 Z"
-         id="path6971" />
-      <path
-         style="fill:#d2423f"
-         inkscape:connector-curvature="0"
-         class="cls-4"
-         d="m 88,43 c -1.28,0 0.26,0.77 -24,-15.4 L 41.66,42.5 c -3.3,2.2 -6.63,-2.79 -3.33,-5 l 24,-16 a 3,3 0 0 1 3.33,0 l 24,16 A 3,3 0 0 1 88,43 Z"
-         id="path6973" />
-      <path
-         style="fill:#ba3b38"
-         inkscape:connector-curvature="0"
-         class="cls-6"
-         d="m 88,41.76 c -1.28,0 0.26,0.77 -24,-15.4 L 41.66,41.25 a 3,3 0 0 1 -4.59,-1.88 3,3 0 0 0 4.59,3.12 L 64,27.61 C 88.33,43.82 86.75,43 88,43 A 3,3 0 0 0 90.93,39.37 3,3 0 0 1 88,41.76 Z"
-         id="path6975" />
-      <path
-         style="fill:#dd6966"
-         inkscape:connector-curvature="0"
-         class="cls-5"
-         d="m 62.34,22.5 a 3,3 0 0 1 3.33,0 c 25.83,17.22 25,16.2 25.29,18 a 3,3 0 0 0 -1.29,-3 l -24,-16 a 3,3 0 0 0 -3.33,0 l -24,16 a 3,3 0 0 0 -1.29,3 c 0.29,-1.78 -0.6,-0.74 25.29,-18 z"
-         id="path6977" />
-      <path
-         style="fill:#4d91bb"
-         inkscape:connector-curvature="0"
-         class="cls-11"
-         d="m 58,85.92 h 12 a 2,2 0 0 1 2,2 V 104 H 56 V 87.92 a 2,2 0 0 1 2,-2 z"
-         id="path6979" />
-      <polygon
-         style="fill:#2175aa"
-         class="cls-7"
-         points="72,102.71 56,103.35 56,104 72,104 "
-         id="polygon6981" />
-      <path
-         style="fill:#2175aa"
-         inkscape:connector-curvature="0"
-         class="cls-7"
-         d="m 56.6,88.53 a 2,2 0 0 1 2,-2 h 12 A 2,2 0 0 1 71.68,86.85 2,2 0 0 0 70,85.92 H 58 a 2,2 0 0 0 -2,2 V 104 h 0.6 z"
-         id="path6983" />
-      <path
-         style="fill:#4d91bb"
-         inkscape:connector-curvature="0"
-         class="cls-11"
-         d="m 60,61.11 h -8 a 2,2 0 0 1 -2,-2 v -8 a 2,2 0 0 1 2,-2 h 8 a 2,2 0 0 1 2,2 v 8 a 2,2 0 0 1 -2,2 z m 2,14 v -8 a 2,2 0 0 0 -2,-2 h -8 a 2,2 0 0 0 -2,2 v 8 a 2,2 0 0 0 2,2 h 8 a 2,2 0 0 0 2,-2 z m 16,-15.4 v -8 a 2,2 0 0 0 -2,-2 h -8 a 2,2 0 0 0 -2,2 v 8 a 2,2 0 0 0 2,2 h 8 a 2,2 0 0 0 2,-2 z m 0,15.4 v -8 a 2,2 0 0 0 -2,-2 h -8 a 2,2 0 0 0 -2,2 v 8 a 2,2 0 0 0 2,2 h 8 a 2,2 0 0 0 2,-2 z"
-         id="path6985" />
-      <path
-         style="fill:#2175aa"
-         inkscape:connector-curvature="0"
-         class="cls-7"
-         d="m 50.78,60.69 a 2,2 0 0 1 -0.42,-1.22 v -8 a 2,2 0 0 1 2,-2 h 8 A 2,2 0 0 1 61.58,49.89 2,2 0 0 0 60,49.11 h -8 a 2,2 0 0 0 -2,2 v 8 a 2,2 0 0 0 0.78,1.58 z"
-         id="path6987" />
-      <path
-         style="fill:#2175aa"
-         inkscape:connector-curvature="0"
-         class="cls-7"
-         d="m 66.78,61.29 a 2,2 0 0 1 -0.42,-1.22 v -8 a 2,2 0 0 1 2,-2 h 8 A 2,2 0 0 1 77.58,50.49 2,2 0 0 0 76,49.71 h -8 a 2,2 0 0 0 -2,2 v 8 a 2,2 0 0 0 0.78,1.58 z"
-         id="path6989" />
-      <path
-         style="fill:#2175aa"
-         inkscape:connector-curvature="0"
-         class="cls-7"
-         d="m 50.36,75.47 v -8 a 2,2 0 0 1 2,-2 h 8 A 2,2 0 0 1 61.58,65.89 2,2 0 0 0 60,65.11 h -8 a 2,2 0 0 0 -2,2 v 8 a 2,2 0 0 0 0.78,1.58 2,2 0 0 1 -0.42,-1.22 z"
-         id="path6991" />
-      <path
-         style="fill:#2175aa"
-         inkscape:connector-curvature="0"
-         class="cls-7"
-         d="m 66.36,75.47 v -8 a 2,2 0 0 1 2,-2 h 8 A 2,2 0 0 1 77.58,65.89 2,2 0 0 0 76,65.11 h -8 a 2,2 0 0 0 -2,2 v 8 a 2,2 0 0 0 0.78,1.58 2,2 0 0 1 -0.42,-1.22 z"
-         id="path6993" />
-    </g>
-    <g
-       id="g7084"
-       transform="translate(38.499899,31.75)">
-      <g
-         id="Energy20" />
-      <g
-         id="Energy19" />
-      <g
-         id="Energy18" />
-      <g
-         id="Energy17" />
-      <g
-         id="Energy16" />
-      <g
-         id="Energy15" />
-      <g
-         id="Energy14" />
-      <g
-         id="Energy13" />
-      <g
-         id="Energy12" />
-      <g
-         id="Energy11" />
-      <g
-         id="Energy10" />
-      <g
-         id="Energy09" />
-      <g
-         id="Energy08" />
-      <g
-         id="Energy07" />
-      <g
-         id="Energy06" />
-      <g
-         id="Energy05" />
-      <g
-         id="Energy04" />
-      <g
-         id="Energy03" />
-      <g
-         id="Energy02" />
-      <g
-         id="Energy01">
-        <g
-           id="g7051">
-          <path
-             id="path7049"
-             d="m 26.87,12.49 -10,18 C 16.69,30.81 16.36,31 16,31 15.92,31 15.83,30.99 15.75,30.97 15.31,30.85 15,30.46 15,30 V 19 H 6 C 5.66,19 5.35,18.83 5.16,18.55 4.98,18.27 4.95,17.91 5.08,17.6 l 7,-16 C 12.24,1.24 12.6,1 13,1 h 6 c 0.33,0 0.64,0.16 0.83,0.44 0.18,0.27 0.22,0.62 0.1,0.93 L 16.48,11 H 26 c 0.35,0 0.68,0.19 0.86,0.49 0.18,0.31 0.19,0.69 0.01,1 z"
-             inkscape:connector-curvature="0"
-             style="fill:#ffb841" />
-        </g>
-      </g>
     </g>
   </g>
   <g
@@ -569,6 +369,32 @@
              style="fill:#ffb841" />
         </g>
       </g>
+    </g>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer5"
+     inkscape:label="Layer 5"
+     style="display:none">
+    <g
+       style="display:inline;fill:#ffffff"
+       id="g8054"
+       transform="matrix(3.2222222,0,0,2.8333333,24.583333,30.5)">
+      <path
+         id="path8038"
+         d="M 19,17 H 5 c -1.103,0 -2,0.897 -2,2 0,1.103 0.897,2 2,2 h 14 c 1.103,0 2,-0.897 2,-2 0,-1.103 -0.897,-2 -2,-2 z"
+         inkscape:connector-curvature="0"
+         style="fill:#ffffff" />
+      <path
+         id="path8040"
+         d="M 19,10 H 5 c -1.103,0 -2,0.897 -2,2 0,1.103 0.897,2 2,2 h 14 c 1.103,0 2,-0.897 2,-2 0,-1.103 -0.897,-2 -2,-2 z"
+         inkscape:connector-curvature="0"
+         style="fill:#ffffff" />
+      <path
+         id="path8042"
+         d="M 19,3 H 5 C 3.897,3 3,3.897 3,5 3,6.103 3.897,7 5,7 H 19 C 20.103,7 21,6.103 21,5 21,3.897 20.103,3 19,3 Z"
+         inkscape:connector-curvature="0"
+         style="fill:#ffffff" />
     </g>
   </g>
 </svg>
