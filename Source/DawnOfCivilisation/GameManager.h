@@ -6,7 +6,7 @@
 #include "UObject/NoExportTypes.h"
 #include "Tickable.h"
 #include "Building.h"
-#include "Engine/Texture2D.h"
+#include "SlateBrush.h"
 #include "GameManager.generated.h"
 
 UENUM(BlueprintType)
@@ -31,30 +31,30 @@ struct FBuildingDesc
 {
 	GENERATED_BODY()
 
-	//UPROPERTY()
-	//TSubclassOf<IBuilding> Building;
+	UPROPERTY(BlueprintReadWrite)
+	FName Name;
 
-	UPROPERTY()
-	FName Building;
+	UPROPERTY(BlueprintReadWrite)
+	FSlateBrush Icon;
 
-	UPROPERTY()
-	UTexture2D* Icon;
+	UPROPERTY(BlueprintReadWrite)
+	bool Unlocked;
+
+	UPROPERTY(BlueprintReadWrite)
+	UClass* Building;
+
+	FBuildingDesc() : Unlocked(false) {}
 
 	bool operator==(const FBuildingDesc& other)
 	{
-		return Building == other.Building;
-	}
-
-	FName GetTypeHash()
-	{
-		return Building;
+		return Name == other.Name;
 	}
 };
 
 /**
  * 
  */
-UCLASS()
+UCLASS(Blueprintable)
 class DAWNOFCIVILISATION_API UGameManager : public UObject, public FTickableGameObject
 {
 	GENERATED_BODY()
@@ -74,13 +74,9 @@ class DAWNOFCIVILISATION_API UGameManager : public UObject, public FTickableGame
 		UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		TMap<float, FGameEvent> Milestones;
 
-		/*UPROPERTY()
-		TSet<FBuildingDesc> UnlockedBuildings;
+		UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		TArray<FBuildingDesc> Buildings;
 
-		UPROPERTY()
-		TSet<FBuildingDesc> LockedBuildings;*/
-
-	private:
-		UPROPERTY()
-		double EnergyConsumption;
+		UPROPERTY(BlueprintReadWrite)
+		int64 EnergyConsumption;
 };
