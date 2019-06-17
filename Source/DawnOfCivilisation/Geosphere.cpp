@@ -313,9 +313,6 @@ void AGeosphere::Generate(float radius, size_t tessellation)
 			v.position += v.normal * height;
 		}
 
-		if (height < 0.0f)
-			cost = 6;
-
 		Vertices.Add(v.position);
 		UV.Add(v.uv);
 		Costs.Add(cost);
@@ -357,8 +354,12 @@ void AGeosphere::Generate(float radius, size_t tessellation)
 	if (ReverseCulling)
 		ReverseWinding();
 
+	TMap<FString, float> attrs;
+	attrs.Add("Tree", 100.0f);
+	attrs.Add("Mountain", 500.0f);
+
 	NodeGraph = NewObject<UNodeGraph>();
-	NodeGraph->Generate(Vertices, Normals, Indices, Costs);
+	NodeGraph->SetAttributes(GetWorld(), Radius, NoiseHeight, attrs);
 
 	GenerateMeshSection();
 }

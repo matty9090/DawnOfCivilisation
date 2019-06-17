@@ -7,7 +7,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(BlueprintType)
 class DAWNOFCIVILISATION_API UGraphNode : public UObject
 {
 	GENERATED_BODY()
