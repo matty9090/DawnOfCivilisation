@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="128px"
+   height="128px"
+   viewBox="0 0 128 128"
+   version="1.1"
+   id="SVGRoot"
+   sodipodi:docname="BuildingButton.svg"
+   inkscape:export-filename="C:\Users\Matty\Documents\Projects\DawnOfCivilisation\Textures\UI\UI_TemplBuilding.png"
+   inkscape:export-xdpi="384"
+   inkscape:export-ydpi="384"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
+  <defs
+     id="defs3785">
+    <linearGradient
+       osb:paint="gradient"
+       id="linearGradient6134">
+      <stop
+         id="stop6192"
+         offset="0"
+         style="stop-color:#000000;stop-opacity:1;" />
+      <stop
+         id="stop6194"
+         offset="1"
+         style="stop-color:#000000;stop-opacity:0;" />
+    </linearGradient>
+    <filter
+       style="color-interpolation-filters:sRGB;"
+       inkscape:label="Drop Shadow"
+       id="filter6771">
+      <feFlood
+         flood-opacity="0.498039"
+         flood-color="rgb(0,0,0)"
+         result="flood"
+         id="feFlood6761" />
+      <feComposite
+         in="flood"
+         in2="SourceGraphic"
+         operator="in"
+         result="composite1"
+         id="feComposite6763" />
+      <feGaussianBlur
+         in="composite1"
+         stdDeviation="0.4"
+         result="blur"
+         id="feGaussianBlur6765" />
+      <feOffset
+         dx="0.8"
+         dy="0.8"
+         result="offset"
+         id="feOffset6767" />
+      <feComposite
+         in="SourceGraphic"
+         in2="offset"
+         operator="over"
+         result="composite2"
+         id="feComposite6769" />
+    </filter>
+    <style
+       id="style6834">.cls-1{fill:#ccc;}.cls-2{fill:#e6e6e6;}.cls-3{fill:#b3b3b3;}.cls-4{fill:#d2423f;}.cls-5{fill:#dd6966;}.cls-6{fill:#ba3b38;}.cls-7{fill:#2175aa;}.cls-8{fill:#1d6694;}.cls-9{fill:#f2f2f2;}.cls-10{fill:#f7f7f7;}.cls-11{fill:#4d91bb;}</style>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="4"
+     inkscape:cx="43.338787"
+     inkscape:cy="68.138516"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="1272"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:grid-bbox="true"
+     showborder="true"
+     borderlayer="false"
+     inkscape:pagecheckerboard="true" />
+  <metadata
+     id="metadata3788">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     style="display:inline">
+    <circle
+       id="path3798"
+       cx="63.904774"
+       cy="64.448776"
+       r="60"
+       style="fill:#ffffff;filter:url(#filter6771)" />
+    <circle
+       id="path3800"
+       style="fill:#e2609b;fill-opacity:1;stroke-width:3.81779623"
+       cy="64.161163"
+       cx="63.662064"
+       r="55" />
+  </g>
+</svg>
