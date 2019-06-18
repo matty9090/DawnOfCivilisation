@@ -3,9 +3,12 @@
 #include "Engine/Texture.h"
 #include "Engine/Blueprint.h"
 #include "FileManager.h"
+#include "Json.h"
 
 UGameManager::UGameManager() : EnergyConsumption(0.0)
 {
+	//FJsonSerializer::Deserialize()
+
 	TArray<FString> folders;
 	FString path = FPaths::GameContentDir() + TEXT("Models/Buildings/*");
 
