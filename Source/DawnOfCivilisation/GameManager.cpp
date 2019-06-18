@@ -15,23 +15,27 @@ UGameManager::UGameManager() : EnergyConsumption(0.0)
 	for(auto building : folders)
 	{
 		FString base = TEXT("/Game/Models/Buildings/");
-		FString texPath = base  + building + "/" + building + "_Ico";
-		FString bpPath  = base  + building + "/" + building + "_BP";
+		FString assetBase = FPaths::GameContentDir() + TEXT("Models/Buildings/") + building + "/" + building;
+		FString texPath = building + "/" + building + "_Ico";
+		FString bpPath  = building + "/" + building + "_BP";
 
-		auto tex = ConstructorHelpers::FObjectFinder<UTexture>(*texPath);
-		auto bp = ConstructorHelpers::FObjectFinder<UBlueprint>(*bpPath);
-
-		if (!tex.Succeeded())
+		if(!fileManager.FileExists(*(assetBase + "_Ico.uasset")))
 		{
 			UE_LOG(LogTemp, Warning, TEXT("Could not find texture for %s"), *building);
 			continue;
 		}
 
-		if (!bp.Succeeded())
+		if (!fileManager.FileExists(*(assetBase + "_BP.uasset")))
 		{
 			UE_LOG(LogTemp, Warning, TEXT("Could not find model blueprint for %s"), *building);
 			continue;
 		}
+
+		auto tex = ConstructorHelpers::FObjectFinder<UTexture>(*(base + texPath));
+		auto bp = ConstructorHelpers::FObjectFinder<UBlueprint>(*(base + bpPath));
+
+		if (!tex.Succeeded()) continue;
+		if (!bp.Succeeded())  continue;
 
 		FSlateBrush brush;
 		brush.ImageSize = FVector2D(128.0f, 128.0f);
