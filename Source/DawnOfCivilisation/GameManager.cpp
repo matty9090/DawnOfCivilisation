@@ -7,18 +7,30 @@
 
 UGameManager::UGameManager() : EnergyConsumption(0.0)
 {
-	//FJsonSerializer::Deserialize()
+	FString jsonFile = FPaths::ProjectConfigDir() + TEXT("Buildings.json"), jsonStr;
+	
+	if (!FFileHelper::LoadFileToString(jsonStr, *jsonFile))
+		throw std::exception("Building JSON file not found");
 
-	TArray<FString> folders;
-	FString path = FPaths::GameContentDir() + TEXT("Models/Buildings/*");
+	TSharedPtr<FJsonObject> json;
+	TSharedRef<TJsonReader<TCHAR>> reader = TJsonReaderFactory<TCHAR>::Create(jsonStr);
+
+	if(!FJsonSerializer::Deserialize(reader, json))
+		throw std::exception("Error parsing JSON");
+
+	auto buildings = json->GetArrayField("Buildings");
 
 	IFileManager& fileManager = IFileManager::Get();
-	fileManager.FindFiles(folders, *path, false, true);
-	
-	for(auto building : folders)
+
+	for(auto b : buildings)
 	{
+		auto fields = b->AsObject();
+
+		FString building = fields->GetStringField("Name");
+		building.ReplaceInline(L" ", L"");
+
 		FString base = TEXT("/Game/Models/Buildings/");
-		FString assetBase = FPaths::GameContentDir() + TEXT("Models/Buildings/") + building + "/" + building;
+		FString assetBase = FPaths::ProjectContentDir() + TEXT("Models/Buildings/") + building + "/" + building;
 		FString texPath = building + "/" + building + "_Ico";
 		FString bpPath  = building + "/" + building + "_BP";
 
@@ -45,9 +57,9 @@ UGameManager::UGameManager() : EnergyConsumption(0.0)
 		brush.SetResourceObject(tex.Object);
 
 		FBuildingDesc item;
-		item.Name = "Building 0";
+		item.Name = fields->GetStringField("Name");
 		item.Icon = brush;
-		item.Unlocked = true;
+		item.Unlocked = fields->GetBoolField("Unlocked");
 
 		if (bp.Object != NULL)
 			item.Building = bp.Object->GeneratedClass;

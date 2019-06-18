@@ -16,7 +16,7 @@
    version="1.1"
    id="SVGRoot"
    sodipodi:docname="BuildingButton.svg"
-   inkscape:export-filename="C:\Users\Matty\Documents\Projects\DawnOfCivilisation\Textures\UI\UI_TemplBuilding.png"
+   inkscape:export-filename="C:\Users\Matty\Documents\Projects\DawnOfCivilisation\Textures\UI\BuildingLocked.png"
    inkscape:export-xdpi="384"
    inkscape:export-ydpi="384"
    inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
@@ -76,9 +76,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="4"
-     inkscape:cx="43.338787"
-     inkscape:cy="68.138516"
+     inkscape:zoom="5.6568542"
+     inkscape:cx="56.695823"
+     inkscape:cy="56.127076"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -99,7 +99,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -119,6 +119,19 @@
        style="fill:#e2609b;fill-opacity:1;stroke-width:3.81779623"
        cy="64.161163"
        cx="63.662064"
-       r="55" />
+       r="55"
+       inkscape:export-xdpi="446.83636"
+       inkscape:export-ydpi="446.83636" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Lock"
+     style="display:none">
+    <path
+       id="path19"
+       d="m 46.773089,48.396045 v 8.793135 h -3.977058 c -2.929811,0 -5.302973,2.248578 -5.302973,5.024768 v 25.123986 c 0,2.776047 2.373162,5.024487 5.302973,5.024487 h 42.422362 c 2.929671,0 5.303271,-2.24844 5.303271,-5.024487 V 62.213948 c 0,-2.77619 -2.3736,-5.024768 -5.303271,-5.024768 h -3.976759 v -8.793135 c 0,-9.019198 -7.716265,-16.330428 -17.234275,-16.330428 -9.51801,0 -17.23427,7.311091 -17.23427,16.330428 z m 6.628612,8.793135 v -8.793135 c 0,-5.552247 4.745874,-10.049673 10.605508,-10.049673 5.859648,0 10.605808,4.497426 10.605808,10.049673 v 8.793135 z m 5.302686,13.818185 c 0,-2.776051 2.373012,-5.02463 5.302822,-5.02463 2.929824,0 5.302686,2.248579 5.302686,5.02463 0,1.771427 -0.967996,3.329244 -2.425826,4.221045 0,0 0.517998,2.965196 1.100486,6.456759 0,1.04223 -0.888181,1.883843 -1.988666,1.883843 h -3.977346 c -1.100348,0 -1.988379,-0.841613 -1.988379,-1.883843 l 1.100485,-6.456759 c -1.45798,-0.891801 -2.426262,-2.449755 -2.426262,-4.221045 z"
+       inkscape:connector-curvature="0"
+       style="clip-rule:evenodd;display:inline;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke-width:0.14203751" />
   </g>
 </svg>

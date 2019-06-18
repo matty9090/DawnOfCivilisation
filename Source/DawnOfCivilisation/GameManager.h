@@ -32,7 +32,7 @@ struct FBuildingDesc
 	GENERATED_BODY()
 
 	UPROPERTY(BlueprintReadWrite)
-	FName Name;
+	FString Name;
 
 	UPROPERTY(BlueprintReadWrite)
 	FSlateBrush Icon;
