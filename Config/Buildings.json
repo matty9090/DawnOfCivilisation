@@ -1,0 +1,14 @@
+{
+	"Buildings": [
+		{
+			"Name": "Building 0",
+			"NumBuilders": 1,
+			"Unlocked": true
+		},
+		{
+			"Name": "Building 1",
+			"NumBuilders": 1,
+			"Unlocked": false
+		}
+	]
+}
