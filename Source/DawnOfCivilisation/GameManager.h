@@ -41,7 +41,7 @@ struct FBuildingDesc
 	bool Unlocked;
 
 	UPROPERTY(BlueprintReadWrite)
-	UClass* Building;
+	TSubclassOf<AActor> Building;
 
 	FBuildingDesc() : Unlocked(false) {}
 
