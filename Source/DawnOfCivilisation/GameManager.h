@@ -32,7 +32,16 @@ struct FGameEvent
 	GENERATED_BODY()
 
 	UPROPERTY()
+	FString Name;
+
+	UPROPERTY()
+	double EnergyConsumption;
+
+	UPROPERTY()
 	EEvent Type;
+
+	UPROPERTY()
+	FString Data;
 };
 
 USTRUCT(BlueprintType)
@@ -127,6 +136,9 @@ class DAWNOFCIVILISATION_API UGameManager : public UObject, public FTickableGame
 		/* ----- Resource methods ----- */
 
 		UFUNCTION(BlueprintCallable)
+		void AddSingleResourceAmount(EResourceType res, int val) { Resources[res] += val; }
+
+		UFUNCTION(BlueprintCallable)
 		void AddResourceAmount(TMap<EResourceType, int> res);
 
 		UFUNCTION(BlueprintCallable)
@@ -151,13 +163,13 @@ class DAWNOFCIVILISATION_API UGameManager : public UObject, public FTickableGame
 		UFUNCTION(BlueprintCallable)
 		bool CanPlaceBuilding(FBuildingDesc building);
 
+		UFUNCTION(BlueprintCallable)
+		void UnlockBuilding(FBuildingDesc building) { Buildings[building.Name].Unlocked = true; }
+
+		UFUNCTION(BlueprintCallable)
+		TArray<FBuildingDesc> GetBuildingList();
+
 		/* -----------------------------*/
-
-		UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		TMap<float, FGameEvent> Milestones;
-
-		UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		TArray<FBuildingDesc> Buildings;
 
 	private:
 		UPROPERTY()
@@ -172,12 +184,19 @@ class DAWNOFCIVILISATION_API UGameManager : public UObject, public FTickableGame
 		UPROPERTY()
 		float EnergyConsumption;
 
+		UPROPERTY()
+		TMap<float, FGameEvent> Milestones;
+
+		UPROPERTY()
+		TMap<FString, FBuildingDesc> Buildings;
+
 		/* ------- Load settings ------ */
 
 		TSharedPtr<FJsonObject> GetSettingsJson();
 		void LoadBuildings();
 		void LoadPrefixes();
 		void LoadResources();
+		void LoadMilestones();
 
 		/* ---------------------------- */
 };

@@ -12,6 +12,14 @@
 			"ResMetal": 50
 		}
 	],
+	"Milestones": [
+		{
+			"Name": "Mr Miner",
+			"Event": "UnlockBuilding",
+			"Data": "Building 1",
+			"EnergyRequired": 0
+		}
+	],
 	"Prefixes": [
 		{
 			"Power": 0,

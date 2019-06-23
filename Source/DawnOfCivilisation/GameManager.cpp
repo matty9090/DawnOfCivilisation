@@ -15,7 +15,7 @@ UGameManager::UGameManager()
 
 TSharedPtr<FJsonObject> UGameManager::GetSettingsJson()
 {
-	FString jsonFile = FPaths::ProjectConfigDir() + TEXT("Buildings.json"), jsonStr;
+	FString jsonFile = FPaths::ProjectConfigDir() + TEXT("GameConfig.json"), jsonStr;
 
 	if (!FFileHelper::LoadFileToString(jsonStr, *jsonFile))
 		throw std::exception("Building JSON file not found");
@@ -90,7 +90,7 @@ void UGameManager::LoadBuildings()
 			continue;
 		}
 
-		Buildings.Add(item);
+		Buildings.Add(item.Name, item);
 	}
 }
 
@@ -113,6 +113,28 @@ void UGameManager::LoadResources()
 	Resources.Add(EResourceType::Coal, FResource());
 	Resources.Add(EResourceType::Oil, FResource());
 	Resources.Add(EResourceType::Silicon, FResource());
+}
+
+void UGameManager::LoadMilestones()
+{
+	auto json = GetSettingsJson();
+	auto milestones = json->GetArrayField("Milestones");
+
+	for (auto milestone : milestones)
+	{
+		auto obj = milestone->AsObject();
+		auto type = obj->GetStringField("Event");
+
+		FGameEvent evt;
+		
+		if (type == "UnlockBuilding")	evt.Type = EEvent::UnlockBuilding;
+		if (type == "UnlockTechnology") evt.Type = EEvent::UnlockTechnology;
+		if (type == "Achievement")		evt.Type = EEvent::Achievement;
+
+		evt.Name = obj->GetStringField("Name");
+		evt.Data = obj->GetStringField("Data");
+		evt.EnergyConsumption = obj->GetIntegerField("EnergyRequired");
+	}
 }
 
 void UGameManager::Tick(float dt)
@@ -158,4 +180,11 @@ bool UGameManager::CanPlaceBuilding(FBuildingDesc building)
 	}
 
 	return true;
+}
+
+TArray<FBuildingDesc> UGameManager::GetBuildingList()
+{
+	TArray<FBuildingDesc> list;
+	Buildings.GenerateValueArray(list);
+	return list;
 }
