@@ -52,7 +52,20 @@ struct FBuildingDesc
 	UPROPERTY(BlueprintReadWrite)
 	TSubclassOf<AActor> Building;
 
-	FBuildingDesc() : Unlocked(false) {}
+	UPROPERTY(BlueprintReadWrite)
+	TMap<EResourceType, int> ResourcesRequired;
+
+	UPROPERTY(BlueprintReadWrite)
+	int BuildersRequired;
+
+	FBuildingDesc() : Unlocked(false)
+	{
+		ResourcesRequired.Add(EResourceType::Wood, 0);
+		ResourcesRequired.Add(EResourceType::Metal, 0);
+		ResourcesRequired.Add(EResourceType::Coal, 0);
+		ResourcesRequired.Add(EResourceType::Oil, 0);
+		ResourcesRequired.Add(EResourceType::Silicon, 0);
+	}
 
 	bool operator==(const FBuildingDesc& other)
 	{
@@ -97,15 +110,6 @@ class DAWNOFCIVILISATION_API UGameManager : public UObject, public FTickableGame
 		bool IsTickableInEditor() const override { return true; }
 		bool IsTickableWhenPaused() const override { return true; }
 		TStatId GetStatId() const override { return TStatId(); }
-
-		/* ------- Load settings ------ */
-
-		TSharedPtr<FJsonObject> GetSettingsJson();
-		void LoadBuildings();
-		void LoadPrefixes();
-		void LoadResources();
-
-		/* ---------------------------- */
 		
 		/* ------ Energy methods ------ */
 
@@ -123,10 +127,10 @@ class DAWNOFCIVILISATION_API UGameManager : public UObject, public FTickableGame
 		/* ----- Resource methods ----- */
 
 		UFUNCTION(BlueprintCallable)
-		void AddResourceAmount(EResourceType res, int val) { Resources[res] += val; }
+		void AddResourceAmount(TMap<EResourceType, int> res);
 
 		UFUNCTION(BlueprintCallable)
-		void SubtractResourceAmount(EResourceType res, int val) { Resources[res] -= val; }
+		void SubtractResourceAmount(TMap<EResourceType, int> res);
 
 		UFUNCTION(BlueprintCallable)
 		int GetResourceAmount(EResourceType res) { return Resources[res](); }
@@ -139,8 +143,15 @@ class DAWNOFCIVILISATION_API UGameManager : public UObject, public FTickableGame
 
 		/* -----------------------------*/
 
+		/* ----- Building methods ----- */
+
 		UFUNCTION(BlueprintCallable)
 		bool IsBuildingUnlocked() { return false; }
+
+		UFUNCTION(BlueprintCallable)
+		bool CanPlaceBuilding(FBuildingDesc building);
+
+		/* -----------------------------*/
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		TMap<float, FGameEvent> Milestones;
@@ -160,4 +171,13 @@ class DAWNOFCIVILISATION_API UGameManager : public UObject, public FTickableGame
 
 		UPROPERTY()
 		float EnergyConsumption;
+
+		/* ------- Load settings ------ */
+
+		TSharedPtr<FJsonObject> GetSettingsJson();
+		void LoadBuildings();
+		void LoadPrefixes();
+		void LoadResources();
+
+		/* ---------------------------- */
 };

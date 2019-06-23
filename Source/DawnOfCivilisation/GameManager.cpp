@@ -73,7 +73,14 @@ void UGameManager::LoadBuildings()
 		FBuildingDesc item;
 		item.Name = fields->GetStringField("Name");
 		item.Icon = brush;
-		item.Unlocked = fields->GetBoolField("Unlocked");
+		item.Unlocked = fields->HasField("Unlocked") ? fields->GetBoolField("Unlocked") : false;
+		item.BuildersRequired = fields->GetIntegerField("NumBuilders");
+
+		item.ResourcesRequired[EResourceType::Wood]	   = fields->HasField("ResWood")    ? fields->GetIntegerField("ResWood") : 0;
+		item.ResourcesRequired[EResourceType::Metal]   = fields->HasField("ResMetal")   ? fields->GetIntegerField("ResMetal") : 0;
+		item.ResourcesRequired[EResourceType::Coal]	   = fields->HasField("ResCoal")    ? fields->GetIntegerField("ResCoal") : 0;
+		item.ResourcesRequired[EResourceType::Oil]     = fields->HasField("ResOil")     ? fields->GetIntegerField("ResOil") : 0;
+		item.ResourcesRequired[EResourceType::Silicon] = fields->HasField("ResSilicon") ? fields->GetIntegerField("ResSilicon") : 0;
 
 		if (bp.Object != NULL)
 			item.Building = bp.Object->GeneratedClass;
@@ -128,4 +135,27 @@ FString UGameManager::GetFormattedEnergyConsumption()
 {
 	double adj = static_cast<int>(EnergyConsumption / pow(10.0, CurrentPrefix));
 	return FString::FromInt(adj) + Prefixes[CurrentPrefix] + 'W';
+}
+
+void UGameManager::AddResourceAmount(TMap<EResourceType, int> res)
+{
+	for (auto r : res)
+		Resources[r.Key] += r.Value;
+}
+
+void UGameManager::SubtractResourceAmount(TMap<EResourceType, int> res)
+{
+	for (auto r : res)
+		Resources[r.Key] -= r.Value;
+}
+
+bool UGameManager::CanPlaceBuilding(FBuildingDesc building)
+{
+	for(auto res : building.ResourcesRequired)
+	{
+		if (Resources[res.Key]() < res.Value)
+			return false;
+	}
+
+	return true;
 }

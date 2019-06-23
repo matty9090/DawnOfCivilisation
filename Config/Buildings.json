@@ -2,13 +2,14 @@
 	"Buildings": [
 		{
 			"Name": "Building 0",
+			"Unlocked": true,
 			"NumBuilders": 1,
-			"Unlocked": true
+			"ResWood": 500
 		},
 		{
 			"Name": "Building 1",
 			"NumBuilders": 1,
-			"Unlocked": false
+			"ResMetal": 50
 		}
 	],
 	"Prefixes": [
