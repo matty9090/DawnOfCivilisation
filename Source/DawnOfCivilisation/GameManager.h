@@ -98,10 +98,9 @@ class DAWNOFCIVILISATION_API UGameManager : public UObject, public FTickableGame
 		bool IsTickableInEditor() const override { return true; }
 		bool IsTickableWhenPaused() const override { return true; }
 		TStatId GetStatId() const override { return TStatId(); }
-
-		UFUNCTION(BlueprintCallable)
-		FString GetFormattedEnergyConsumption();
 		
+		/* ------ Energy methods ------ */
+
 		UFUNCTION(BlueprintCallable)
 		void AddEnergyConsumption(float watts);
 
@@ -109,7 +108,11 @@ class DAWNOFCIVILISATION_API UGameManager : public UObject, public FTickableGame
 		float GetEnergyConsumption() { return EnergyConsumption; }
 
 		UFUNCTION(BlueprintCallable)
-		bool IsBuildingUnlocked() { return false; }
+		FString GetFormattedEnergyConsumption();
+
+		/* ---------------------------- */
+
+		/* ----- Resource methods ----- */
 
 		UFUNCTION(BlueprintCallable)
 		void AddResourceAmount(EResourceType res, int val) { Resources[res] += val; }
@@ -125,6 +128,11 @@ class DAWNOFCIVILISATION_API UGameManager : public UObject, public FTickableGame
 
 		UFUNCTION(BlueprintCallable)
 		bool IsResourceUnlocked(EResourceType res) { return Resources[res].IsUnlocked; }
+
+		/* -----------------------------*/
+
+		UFUNCTION(BlueprintCallable)
+		bool IsBuildingUnlocked() { return false; }
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		TMap<float, FGameEvent> Milestones;
