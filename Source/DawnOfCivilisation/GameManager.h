@@ -177,7 +177,7 @@ class DAWNOFCIVILISATION_API UGameManager : public UObject, public FTickableGame
 		UFUNCTION(BlueprintCallable)
 		TArray<FBuildingDesc> GetBuildingList();
 
-		/* -----------------------------*/
+		/* ---------------------------- */
 
 		/* ----- Milestone methods ---- */
 
@@ -187,7 +187,13 @@ class DAWNOFCIVILISATION_API UGameManager : public UObject, public FTickableGame
 		UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
 		void OnMilestoneCompleted(FGameEvent milestoneEvt);
 
-		/* -----------------------------*/
+		/* ---------------------------- */
+
+		UPROPERTY(BlueprintReadOnly)
+		TArray<FGameEvent> Milestones;
+
+		UPROPERTY(BlueprintReadOnly)
+		TArray<FGameEvent> CompletedMilestones;
 
 	private:
 		UPROPERTY()
@@ -201,12 +207,6 @@ class DAWNOFCIVILISATION_API UGameManager : public UObject, public FTickableGame
 
 		UPROPERTY()
 		float EnergyConsumption;
-
-		UPROPERTY()
-		TArray<FGameEvent> Milestones;
-
-		UPROPERTY()
-		TArray<FGameEvent> CompletedMilestones;
 
 		UPROPERTY()
 		TMap<FString, FBuildingDesc> Buildings;
