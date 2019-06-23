@@ -14,7 +14,17 @@ enum class EEvent : uint8
 {
 	UnlockBuilding 		 UMETA(DisplayName = "Unlock Building"),
 	UnlockTechnology 	 UMETA(DisplayName = "Unlock Technology"),
-	Achievement			 UMETA(DisplayName = "Achievement"),
+	Achievement			 UMETA(DisplayName = "Achievement")
+};
+
+UENUM(BlueprintType)
+enum class EResourceType : uint8
+{
+	Wood 		 UMETA(DisplayName = "Wood"),
+	Metal 		 UMETA(DisplayName = "Metal"),
+	Coal		 UMETA(DisplayName = "Coal"),
+	Oil			 UMETA(DisplayName = "Oil"),
+	Silicon		 UMETA(DisplayName = "Silicone")
 };
 
 USTRUCT(BlueprintType)
@@ -51,6 +61,30 @@ struct FBuildingDesc
 	}
 };
 
+USTRUCT(BlueprintType)
+struct FResource
+{
+	GENERATED_BODY()
+
+	UPROPERTY()
+	int Amount;
+
+	UPROPERTY()
+	bool IsUnlocked;
+
+	FResource() : Amount(0), IsUnlocked(false) {}
+	FResource(bool unlocked) : Amount(0), IsUnlocked(unlocked) {}
+	FResource(int val, bool unlocked) : Amount(val), IsUnlocked(unlocked) {}
+
+	void operator+=(int v) { Amount += v; }
+	void operator-=(int v) { Amount -= v; }
+
+	int operator+(int v) { return Amount + v; }
+	int operator-(int v) { return Amount - v; }
+
+	int operator()() { return Amount; }
+};
+
 UCLASS(Blueprintable)
 class DAWNOFCIVILISATION_API UGameManager : public UObject, public FTickableGameObject
 {
@@ -77,6 +111,21 @@ class DAWNOFCIVILISATION_API UGameManager : public UObject, public FTickableGame
 		UFUNCTION(BlueprintCallable)
 		bool IsBuildingUnlocked() { return false; }
 
+		UFUNCTION(BlueprintCallable)
+		void AddResourceAmount(EResourceType res, int val) { Resources[res] += val; }
+
+		UFUNCTION(BlueprintCallable)
+		void SubtractResourceAmount(EResourceType res, int val) { Resources[res] -= val; }
+
+		UFUNCTION(BlueprintCallable)
+		int GetResourceAmount(EResourceType res) { return Resources[res](); }
+
+		UFUNCTION(BlueprintCallable)
+		void UnlockResource(EResourceType res) { Resources[res].IsUnlocked = true; }
+
+		UFUNCTION(BlueprintCallable)
+		bool IsResourceUnlocked(EResourceType res) { return Resources[res].IsUnlocked; }
+
 		UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		TMap<float, FGameEvent> Milestones;
 
@@ -84,8 +133,15 @@ class DAWNOFCIVILISATION_API UGameManager : public UObject, public FTickableGame
 		TArray<FBuildingDesc> Buildings;
 
 	private:
+		UPROPERTY()
 		TMap<int, FString> Prefixes;
 
+		UPROPERTY()
+		TMap<EResourceType, FResource> Resources;
+
+		UPROPERTY()
 		int CurrentPrefix;
+
+		UPROPERTY()
 		float EnergyConsumption;
 };

@@ -83,6 +83,12 @@ UGameManager::UGameManager()
 	Prefixes.Add(18, "E");
 	Prefixes.Add(21, "Z");
 	Prefixes.Add(24, "Y");
+
+	Resources.Add(EResourceType::Wood, FResource(1000, true));
+	Resources.Add(EResourceType::Metal, FResource());
+	Resources.Add(EResourceType::Coal, FResource());
+	Resources.Add(EResourceType::Oil, FResource());
+	Resources.Add(EResourceType::Silicon, FResource());
 }
 
 void UGameManager::Tick(float dt)
