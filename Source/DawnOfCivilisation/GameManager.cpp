@@ -11,6 +11,7 @@ UGameManager::UGameManager()
 	LoadBuildings();
 	LoadPrefixes();
 	LoadResources();
+	LoadMilestones();
 }
 
 TSharedPtr<FJsonObject> UGameManager::GetSettingsJson()
@@ -159,9 +160,12 @@ void UGameManager::CompleteMilestone(FString name)
 			Milestones.Remove(milestone);
 			OnMilestoneCompleted(milestone);
 
-			break;
+			return;
 		}
 	}
+	
+	if(CompletedMilestones.FindByPredicate([name](FGameEvent evt) { return evt.Name == name; }) == NULL)
+		UE_LOG(LogTemp, Error, TEXT("Milestone '%s' does not exist"), *name);
 }
 
 void UGameManager::AddEnergyConsumption(float watts)

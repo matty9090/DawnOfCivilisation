@@ -31,16 +31,16 @@ struct FGameEvent
 {
 	GENERATED_BODY()
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly)
 	FString Name;
 
-	UPROPERTY()
-	double EnergyConsumption;
+	UPROPERTY(BlueprintReadOnly)
+	float EnergyConsumption;
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly)
 	EEvent Type;
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly)
 	FString Data;
 
 	bool operator==(const FGameEvent& other)
@@ -184,8 +184,8 @@ class DAWNOFCIVILISATION_API UGameManager : public UObject, public FTickableGame
 		UFUNCTION(BlueprintCallable)
 		void CompleteMilestone(FString milestone);
 
-		UFUNCTION(BlueprintCallable)
-		virtual void OnMilestoneCompleted(FGameEvent milestone) {}
+		UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+		void OnMilestoneCompleted(FGameEvent milestoneEvt);
 
 		/* -----------------------------*/
 
