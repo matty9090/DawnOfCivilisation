@@ -5,7 +5,9 @@
 #include "FileManager.h"
 #include "Json.h"
 
-UGameManager::UGameManager() : EnergyConsumption(0.0)
+UGameManager::UGameManager()
+	: CurrentPrefix(0),
+	  EnergyConsumption(0.0)
 {
 	FString jsonFile = FPaths::ProjectConfigDir() + TEXT("Buildings.json"), jsonStr;
 	
@@ -71,9 +73,36 @@ UGameManager::UGameManager() : EnergyConsumption(0.0)
 
 		Buildings.Add(item);
 	}
+
+	Prefixes.Add(0, "");
+	Prefixes.Add(3, "K");
+	Prefixes.Add(6, "M");
+	Prefixes.Add(9, "G");
+	Prefixes.Add(12, "T");
+	Prefixes.Add(15, "P");
+	Prefixes.Add(18, "E");
+	Prefixes.Add(21, "Z");
+	Prefixes.Add(24, "Y");
 }
 
 void UGameManager::Tick(float dt)
 {
 	
+}
+
+void UGameManager::AddEnergyConsumption(float watts)
+{
+	EnergyConsumption += watts;
+
+	for(auto power : Prefixes)
+	{
+		if (EnergyConsumption >= pow(10.0, power.Key))
+			CurrentPrefix = power.Key;
+	}
+}
+
+FString UGameManager::GetFormattedEnergyConsumption()
+{
+	double adj = static_cast<int>(EnergyConsumption / pow(10.0, CurrentPrefix));
+	return FString::FromInt(adj) + Prefixes[CurrentPrefix] + 'W';
 }

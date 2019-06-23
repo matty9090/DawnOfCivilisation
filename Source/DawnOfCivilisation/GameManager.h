@@ -51,9 +51,6 @@ struct FBuildingDesc
 	}
 };
 
-/**
- * 
- */
 UCLASS(Blueprintable)
 class DAWNOFCIVILISATION_API UGameManager : public UObject, public FTickableGameObject
 {
@@ -69,6 +66,15 @@ class DAWNOFCIVILISATION_API UGameManager : public UObject, public FTickableGame
 		TStatId GetStatId() const override { return TStatId(); }
 
 		UFUNCTION(BlueprintCallable)
+		FString GetFormattedEnergyConsumption();
+		
+		UFUNCTION(BlueprintCallable)
+		void AddEnergyConsumption(float watts);
+
+		UFUNCTION(BlueprintCallable)
+		float GetEnergyConsumption() { return EnergyConsumption; }
+
+		UFUNCTION(BlueprintCallable)
 		bool IsBuildingUnlocked() { return false; }
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -77,6 +83,9 @@ class DAWNOFCIVILISATION_API UGameManager : public UObject, public FTickableGame
 		UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		TArray<FBuildingDesc> Buildings;
 
-		UPROPERTY(BlueprintReadWrite)
-		int64 EnergyConsumption;
+	private:
+		TMap<int, FString> Prefixes;
+
+		int CurrentPrefix;
+		float EnergyConsumption;
 };
