@@ -3,28 +3,40 @@
 #include "Engine/Texture.h"
 #include "Engine/Blueprint.h"
 #include "FileManager.h"
-#include "Json.h"
 
 UGameManager::UGameManager()
 	: CurrentPrefix(0),
 	  EnergyConsumption(0.0)
 {
+	LoadBuildings();
+	LoadPrefixes();
+	LoadResources();
+}
+
+TSharedPtr<FJsonObject> UGameManager::GetSettingsJson()
+{
 	FString jsonFile = FPaths::ProjectConfigDir() + TEXT("Buildings.json"), jsonStr;
-	
+
 	if (!FFileHelper::LoadFileToString(jsonStr, *jsonFile))
 		throw std::exception("Building JSON file not found");
 
 	TSharedPtr<FJsonObject> json;
 	TSharedRef<TJsonReader<TCHAR>> reader = TJsonReaderFactory<TCHAR>::Create(jsonStr);
 
-	if(!FJsonSerializer::Deserialize(reader, json))
+	if (!FJsonSerializer::Deserialize(reader, json))
 		throw std::exception("Error parsing JSON");
 
+	return json;
+}
+
+void UGameManager::LoadBuildings()
+{
+	auto json = GetSettingsJson();
 	auto buildings = json->GetArrayField("Buildings");
 
 	IFileManager& fileManager = IFileManager::Get();
 
-	for(auto b : buildings)
+	for (auto b : buildings)
 	{
 		auto fields = b->AsObject();
 
@@ -34,9 +46,9 @@ UGameManager::UGameManager()
 		FString base = TEXT("/Game/Models/Buildings/");
 		FString assetBase = FPaths::ProjectContentDir() + TEXT("Models/Buildings/") + building + "/" + building;
 		FString texPath = building + "/" + building + "_Ico";
-		FString bpPath  = building + "/" + building + "_BP";
+		FString bpPath = building + "/" + building + "_BP";
 
-		if(!fileManager.FileExists(*(assetBase + "_Ico.uasset")))
+		if (!fileManager.FileExists(*(assetBase + "_Ico.uasset")))
 		{
 			UE_LOG(LogTemp, Warning, TEXT("Could not find texture for %s"), *building);
 			continue;
@@ -73,17 +85,22 @@ UGameManager::UGameManager()
 
 		Buildings.Add(item);
 	}
+}
 
-	Prefixes.Add(0, "");
-	Prefixes.Add(3, "K");
-	Prefixes.Add(6, "M");
-	Prefixes.Add(9, "G");
-	Prefixes.Add(12, "T");
-	Prefixes.Add(15, "P");
-	Prefixes.Add(18, "E");
-	Prefixes.Add(21, "Z");
-	Prefixes.Add(24, "Y");
+void UGameManager::LoadPrefixes()
+{
+	auto json = GetSettingsJson();
+	auto prefixes = json->GetArrayField("Prefixes");
 
+	for(auto prefix : prefixes)
+	{
+		auto obj = prefix->AsObject();
+		Prefixes.Add(obj->GetNumberField("Power"), obj->GetStringField("Short"));
+	}
+}
+
+void UGameManager::LoadResources()
+{
 	Resources.Add(EResourceType::Wood, FResource(1000, true));
 	Resources.Add(EResourceType::Metal, FResource());
 	Resources.Add(EResourceType::Coal, FResource());

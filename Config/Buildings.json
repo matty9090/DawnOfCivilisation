@@ -10,5 +10,52 @@
 			"NumBuilders": 1,
 			"Unlocked": false
 		}
+	],
+	"Prefixes": [
+		{
+			"Power": 0,
+			"Short": "",
+			"Long": ""
+		},
+		{
+			"Power": 3,
+			"Short": "K",
+			"Long": "Kilo"
+		},
+		{
+			"Power": 6,
+			"Short": "M",
+			"Long": "Mega"
+		},
+		{
+			"Power": 9,
+			"Short": "G",
+			"Long": "Giga"
+		},
+		{
+			"Power": 12,
+			"Short": "T",
+			"Long": "Tera"
+		},
+		{
+			"Power": 15,
+			"Short": "P",
+			"Long": "Peta"
+		},
+		{
+			"Power": 18,
+			"Short": "E",
+			"Long": "Exa"
+		},
+		{
+			"Power": 21,
+			"Short": "Z",
+			"Long": "Zeta"
+		},
+		{
+			"Power": 24,
+			"Short": "Y",
+			"Long": "Yotta"
+		}
 	]
 }

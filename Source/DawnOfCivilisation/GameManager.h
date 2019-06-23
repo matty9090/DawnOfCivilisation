@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -7,6 +5,7 @@
 #include "Tickable.h"
 #include "Building.h"
 #include "SlateBrush.h"
+#include "Json.h"
 #include "GameManager.generated.h"
 
 UENUM(BlueprintType)
@@ -98,6 +97,15 @@ class DAWNOFCIVILISATION_API UGameManager : public UObject, public FTickableGame
 		bool IsTickableInEditor() const override { return true; }
 		bool IsTickableWhenPaused() const override { return true; }
 		TStatId GetStatId() const override { return TStatId(); }
+
+		/* ------- Load settings ------ */
+
+		TSharedPtr<FJsonObject> GetSettingsJson();
+		void LoadBuildings();
+		void LoadPrefixes();
+		void LoadResources();
+
+		/* ---------------------------- */
 		
 		/* ------ Energy methods ------ */
 
