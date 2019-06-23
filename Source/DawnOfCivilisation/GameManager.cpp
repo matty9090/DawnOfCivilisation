@@ -75,6 +75,7 @@ void UGameManager::LoadBuildings()
 		item.Icon = brush;
 		item.Unlocked = fields->HasField("Unlocked") ? fields->GetBoolField("Unlocked") : false;
 		item.BuildersRequired = fields->GetIntegerField("NumBuilders");
+		item.HP = fields->GetIntegerField("HP");
 
 		item.ResourcesRequired[EResourceType::Wood]	   = fields->HasField("ResWood")    ? fields->GetIntegerField("ResWood") : 0;
 		item.ResourcesRequired[EResourceType::Metal]   = fields->HasField("ResMetal")   ? fields->GetIntegerField("ResMetal") : 0;
@@ -134,12 +135,33 @@ void UGameManager::LoadMilestones()
 		evt.Name = obj->GetStringField("Name");
 		evt.Data = obj->GetStringField("Data");
 		evt.EnergyConsumption = obj->GetIntegerField("EnergyRequired");
+
+		Milestones.Add(evt);
 	}
 }
 
 void UGameManager::Tick(float dt)
 {
-	
+	for(auto milestone : Milestones)
+	{
+		if(milestone.EnergyConsumption > 0 && EnergyConsumption >= milestone.EnergyConsumption)
+			CompleteMilestone(milestone.Name);
+	}
+}
+
+void UGameManager::CompleteMilestone(FString name)
+{
+	for (auto milestone : Milestones)
+	{
+		if(milestone.Name == name)
+		{
+			CompletedMilestones.Add(milestone);
+			Milestones.Remove(milestone);
+			OnMilestoneCompleted(milestone);
+
+			break;
+		}
+	}
 }
 
 void UGameManager::AddEnergyConsumption(float watts)

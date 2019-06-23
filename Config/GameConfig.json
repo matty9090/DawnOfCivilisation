@@ -4,12 +4,14 @@
 			"Name": "Building 0",
 			"Unlocked": true,
 			"NumBuilders": 1,
-			"ResWood": 500
+			"ResWood": 500,
+			"HP": 10
 		},
 		{
 			"Name": "Building 1",
 			"NumBuilders": 1,
-			"ResMetal": 50
+			"ResMetal": 50,
+			"HP": 10
 		}
 	],
 	"Milestones": [

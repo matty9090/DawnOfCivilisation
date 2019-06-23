@@ -42,6 +42,11 @@ struct FGameEvent
 
 	UPROPERTY()
 	FString Data;
+
+	bool operator==(const FGameEvent& other)
+	{
+		return Name == other.Name;
+	}
 };
 
 USTRUCT(BlueprintType)
@@ -66,6 +71,9 @@ struct FBuildingDesc
 
 	UPROPERTY(BlueprintReadWrite)
 	int BuildersRequired;
+
+	UPROPERTY(BlueprintReadWrite)
+	int HP;
 
 	FBuildingDesc() : Unlocked(false)
 	{
@@ -171,6 +179,16 @@ class DAWNOFCIVILISATION_API UGameManager : public UObject, public FTickableGame
 
 		/* -----------------------------*/
 
+		/* ----- Milestone methods ---- */
+
+		UFUNCTION(BlueprintCallable)
+		void CompleteMilestone(FString milestone);
+
+		UFUNCTION(BlueprintCallable)
+		virtual void OnMilestoneCompleted(FGameEvent milestone) {}
+
+		/* -----------------------------*/
+
 	private:
 		UPROPERTY()
 		TMap<int, FString> Prefixes;
@@ -185,7 +203,10 @@ class DAWNOFCIVILISATION_API UGameManager : public UObject, public FTickableGame
 		float EnergyConsumption;
 
 		UPROPERTY()
-		TMap<float, FGameEvent> Milestones;
+		TArray<FGameEvent> Milestones;
+
+		UPROPERTY()
+		TArray<FGameEvent> CompletedMilestones;
 
 		UPROPERTY()
 		TMap<FString, FBuildingDesc> Buildings;
