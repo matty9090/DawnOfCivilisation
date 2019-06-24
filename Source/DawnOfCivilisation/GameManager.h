@@ -189,12 +189,6 @@ class DAWNOFCIVILISATION_API UGameManager : public UObject, public FTickableGame
 
 		/* ---------------------------- */
 
-		UPROPERTY(BlueprintReadOnly)
-		TArray<FGameEvent> Milestones;
-
-		UPROPERTY(BlueprintReadOnly)
-		TArray<FGameEvent> CompletedMilestones;
-
 	private:
 		UPROPERTY()
 		TMap<int, FString> Prefixes;
@@ -210,6 +204,12 @@ class DAWNOFCIVILISATION_API UGameManager : public UObject, public FTickableGame
 
 		UPROPERTY()
 		TMap<FString, FBuildingDesc> Buildings;
+
+		UPROPERTY()
+		TArray<FGameEvent> Milestones;
+
+		UPROPERTY()
+		TArray<FGameEvent> CompletedMilestones;
 
 		/* ------- Load settings ------ */
 
