@@ -23,7 +23,7 @@ enum class EResourceType : uint8
 	Metal 		 UMETA(DisplayName = "Metal"),
 	Coal		 UMETA(DisplayName = "Coal"),
 	Oil			 UMETA(DisplayName = "Oil"),
-	Silicon		 UMETA(DisplayName = "Silicone")
+	Silicon		 UMETA(DisplayName = "Silicon")
 };
 
 USTRUCT(BlueprintType)
